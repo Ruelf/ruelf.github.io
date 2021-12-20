@@ -1,0 +1,55 @@
+body {
+    background-color: blue;
+}
+
+div#main {
+    display: flex;
+    justify-content: center;
+}
+
+div.ball {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 5px 5px 5px black;
+    border: 2px solid gray;
+    z-index: -1;
+}
+
+div.ball:nth-child(1) {
+    z-index: 0;
+    top: 150px;
+}
+div.ball:nth-child(2) {
+    z-index: 1;
+    top: 300px;
+}
+
+div.face {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div.eyes {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+div.eye {
+    z-index: 111;
+    width: 25px;
+    height: 25px;
+    background-color: black;
+    display: block;
+    border-radius: 50%;
+}
+
+div.mouth {
+    background-color: red;
+    width: 150px;
+    height: 25px;
+    border-radius: 50%  ;
+}

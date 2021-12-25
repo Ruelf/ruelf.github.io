@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sarcasm</title>
+</head>
+
+<body>
+    <input type="text">
+    <div></div>
+    <script>
+        const input = document.querySelector("input");
+        const div = document.querySelector("div");
+
+        oninput = () => {
+            div.textContent = input.value
+                .split(" ")
+                .map(word => word
+                    .split("")
+                    .map((x, i) => i % 2 ? x.toUpperCase() : x.toLowerCase())
+                    .join("")
+                )
+                .join(" ");
+        };
+    </script>
+</body>
+
+</html>

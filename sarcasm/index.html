@@ -3,27 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/sarcasm/style.css ">
+    <script defer src="/sarcasm/index.js"></script>
     <title>Sarcasm</title>
 </head>
 
 <body>
-    <input type="text">
+    <textarea></textarea>
     <div></div>
-    <script>
-        const input = document.querySelector("input");
-        const div = document.querySelector("div");
-
-        oninput = () => {
-            div.textContent = input.value
-                .split(" ")
-                .map(word => word
-                    .split("")
-                    .map((x, i) => i % 2 ? x.toUpperCase() : x.toLowerCase())
-                    .join("")
-                )
-                .join(" ");
-        };
-    </script>
 </body>
 
 </html>

@@ -11,7 +11,7 @@ function humanDelta(delta) {
     if (Math.floor(delta) === 0) {
         return "0 seconds";
     }
-    
+
     const texts = [];
 
     timeValues.forEach(([name, factor]) => {
@@ -41,3 +41,5 @@ const input = document.querySelector("input");
 const div = document.querySelector("div");
 
 oninput = () => div.innerText = humanDelta(input.value);
+
+oninput();

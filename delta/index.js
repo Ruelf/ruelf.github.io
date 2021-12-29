@@ -8,6 +8,10 @@ const timeValues = [
 ];
 
 function humanDelta(delta) {
+    if (Math.floor(delta) === 0) {
+        return "0 seconds";
+    }
+    
     const texts = [];
 
     timeValues.forEach(([name, factor]) => {

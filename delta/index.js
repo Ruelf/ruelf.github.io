@@ -25,7 +25,7 @@ function humanDelta(delta) {
 // https://github.com/Ruelf/Eclipse/blob/206b4a34446dc211328900c6f6bc8d9448ec2c9f/utils/functions.py#L46-L50
 function joinCommaAnd(array) {
     if (array.length > 2) {
-        return `${array.slice(0, array.length - 1)} and ${array[array.length - 1]}`;
+        return `${array.slice(0, array.length - 1).join(", ")} and ${array[array.length - 1]}`;
     } else {
         return array.join(" and ");
     }

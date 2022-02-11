@@ -5,3 +5,10 @@
 a {
     color: #00E;
 }
+
+@media (prefers-color-scheme: dark) {
+    * {
+        color: white;
+        background: #333;
+    }
+}

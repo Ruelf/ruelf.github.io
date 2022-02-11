@@ -62,7 +62,7 @@ const morse = [
 const encode = string => string
     .toLowerCase()
     .split("")
-    .map(c => (morse.find(([x]) => x === c) ?? [null, c])[1])
+    .map(c => (morse.find(([x]) => x === c) || {1: c})[1])
     .join(" ");
 
 
@@ -70,7 +70,7 @@ const decode = string => string
     .split("\n")
     .map(line => line
         .split(" ")
-        .map(m => (morse.find(([_, x]) => x === m) ?? [m])[0])
+        .map(m => (morse.find(([_, x]) => x === m) || [m])[0])
         .join("")
     )
     .join("\n");

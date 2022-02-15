@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        * {
+            font-family: monospace;
+            font-size: 50px;
+            background-color: black;
+            color: white;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <div></div>
+    <script defer>
+        const timeValues = [
+            ["year", 31556952],
+            ["month", 2629746],
+            ["day", 86400],
+            ["hour", 3600],
+            ["minute", 60],
+            ["second", 1]
+        ];
+
+        function humanDelta(delta) {
+            if (Math.floor(delta) === 0) {
+                return "0 seconds";
+            }
+
+            const texts = [];
+
+            timeValues.forEach(([name, factor]) => {
+                const value = Math.floor(delta / factor);
+
+                if (value !== 0) {
+                    texts.push(`${value} ${name}${value !== 1 ? "s" : ""}`);
+                    delta -= value * factor;
+                }
+            });
+
+            return joinCommaAnd(texts);
+        }
+
+        // https://github.com/Ruelf/Eclipse/blob/206b4a34446dc211328900c6f6bc8d9448ec2c9f/utils/functions.py#L46-L50
+        function joinCommaAnd(array) {
+            if (array.length > 2) {
+                return `${array.slice(0, array.length - 1).join(", ")} and ${array[array.length - 1]}`;
+            } else {
+                return array.join(" and ");
+            }
+        }
+
+        // HTML stuff
+
+        const div = document.querySelector("div");
+        const then = new Date("February 22, 2022 22:22:22");
+        const thenValue = then.valueOf() / 1000;
+        // const now = Date.now();
+
+        const stuff = () => {
+            div.innerText = `${humanDelta((thenValue - Date.now() / 1000))}\nuntil\n${then}`;
+        };
+        
+        stuff();
+        setInterval(stuff, 1000);
+
+    </script>
+</body>
+
+</html>

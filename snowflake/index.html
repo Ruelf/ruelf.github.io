@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Snowflake</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        * {
+            font-family: monospace;
+            font-size: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <script>
+        const divs = document.querySelectorAll("div");
+        function foo() {
+            const now = new Date();
+            divs[0].textContent = BigInt(Math.floor(now.getTime() - 1420070400000)) << 22n;
+            divs[1].textContent = now.toDateString();
+            divs[2].textContent = now.toTimeString();
+        }
+        foo();
+        setInterval(foo, 10);
+
+    </script>
+</body>
+
+</html>

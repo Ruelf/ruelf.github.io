@@ -1,0 +1,45 @@
+<style>
+    body {
+        /* View */
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+
+        /* Center */
+        display: grid;
+        place-items: center;
+
+        /* Text */
+        color: white;
+        font-size: 25vh;
+        font-family: monospace;
+        text-shadow: .5vw .5vh black;
+
+        /* Background */
+        background: url(background.jpg);
+        background-size: 100% 100%;
+
+        /* Other */
+        user-select: none;
+        cursor: none;
+    }
+</style>
+<script>
+    // Prevent interaction
+    window.addEventListener('contextmenu', e => e.preventDefault());
+    window.addEventListener('keydown', e => e.preventDefault());
+
+    function fmt(x) {
+        return x.toString().padStart(2, '0');
+    }
+
+    function tick() {
+        const now = new Date();
+        document.body.textContent = `${fmt(now.getHours())}:${fmt(now.getMinutes())}:${fmt(now.getSeconds())}`;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        tick();
+        setInterval(tick, 100);
+    });
+</script>

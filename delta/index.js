@@ -16,7 +16,7 @@ function humanDelta(delta) {
 
     timeValues.forEach(([name, factor]) => {
         const value = Math.floor(delta / factor);
-        
+
         if (value !== 0) {
             texts.push(`${value} ${name}${value !== 1 ? "s" : ""}`);
             delta -= value * factor;
@@ -36,10 +36,13 @@ function joinCommaAnd(array) {
 }
 
 // HTML stuff
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('e');
 
-const input = document.querySelector("input");
-const div = document.querySelector("div");
+    const input = document.querySelector("input");
+    const div = document.querySelector("p");
 
-oninput = () => div.innerText = humanDelta(input.value);
+    oninput = () => div.innerText = humanDelta(input.value);
 
-oninput();
+    oninput();
+});

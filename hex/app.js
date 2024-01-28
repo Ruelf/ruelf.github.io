@@ -9,7 +9,7 @@ const app = {
     },
 
     async loadTable() {
-        const response = await fetch('/hex/table.json');
+        const response = await fetch('table.json');
         this.table = await response.json();
     },
 

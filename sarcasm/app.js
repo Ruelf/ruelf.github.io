@@ -1,5 +1,5 @@
 const textarea = document.querySelector("textarea");
-const div = document.querySelector("div");
+const div = document.querySelector("#r");
 
 oninput = () => {
     div.innerText = textarea.value.replace(/\w+/g, (word => word

@@ -1,3 +1,4 @@
+import '/theme.js';
 
 $('#repoLink').click(e => {
     e.preventDefault();

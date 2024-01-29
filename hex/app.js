@@ -90,8 +90,7 @@ const app = {
 
     setPreview() {
         localStorage.setItem('current', this.getCode());
-        const c = this.getLetter();
-        $('#preview').text(c === ' ' ? 'Space' : c);
+        $('#preview').text(this.getLetter().replace(' ', 'Space'));
     },
 
     updateResult() {

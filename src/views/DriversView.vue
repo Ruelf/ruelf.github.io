@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { Driver, DriverTable, Response } from '@/types/jolpica';
-import axios from 'axios';
+import { makeJolpicaRequest } from '@/assets/helpers/helpers';
+import type { Driver, DriverTable } from '@/types/jolpica';
 import { ref } from 'vue';
 
 const drivers = ref<Driver[]>();
 
-axios.get<Response<DriverTable>>('https://api.jolpi.ca/ergast/f1/drivers.json')
-    .then(({ data }) => {
-        drivers.value = data.MRData.DriverTable.Drivers;
+makeJolpicaRequest<DriverTable>('/current/drivers')
+    .then(({ MRData }) => {
+        drivers.value = MRData.DriverTable.Drivers;
     });
 </script>
 

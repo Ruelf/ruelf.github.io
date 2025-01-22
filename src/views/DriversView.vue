@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { makeJolpicaRequest } from '@/assets/helpers/helpers';
+import { makeJolpicaRequest } from '@/helpers/helpers';
 import type { Driver, DriverTable } from '@/types/jolpica';
 import { ref } from 'vue';
 

@@ -25,12 +25,12 @@ makeJolpicaRequest<DriverTable>('/current/drivers')
         </thead>
         <tbody>
             <tr v-for="driver of drivers" :key="driver.driverId">
-                <th>{{ driver.driverId }}</th>
-                <th>{{ driver.url }}</th>
-                <th>{{ driver.givenName }}</th>
-                <th>{{ driver.familyName }}</th>
-                <th>{{ driver.dateOfBirth }}</th>
-                <th>{{ driver.nationality }}</th>
+                <td>{{ driver.driverId }}</td>
+                <td>{{ driver.url }}</td>
+                <td>{{ driver.givenName }}</td>
+                <td>{{ driver.familyName }}</td>
+                <td>{{ driver.dateOfBirth }}</td>
+                <td>{{ driver.nationality }}</td>
             </tr>
         </tbody>
     </table>

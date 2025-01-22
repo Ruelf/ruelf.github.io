@@ -1,3 +1,4 @@
+import DriversView from '@/views/DriversView.vue'
 import HomeView from '@/views/HomeView.vue'
 import SnowflakeView from '@/views/SnowflakeView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -15,6 +16,17 @@ const router = createRouter({
       name: 'snowflake',
       component: SnowflakeView,
     },
+    {
+        path: '/f1',
+        name: 'f1',
+        children: [
+            {
+                path: '/drivers',
+                name: 'drivers',
+                component: DriversView,
+            }
+        ]
+    }
   ],
 })
 

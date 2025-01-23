@@ -1,12 +1,10 @@
 import DriversView from '@/views/DriversView.vue'
 import HomeView from '@/views/HomeView.vue'
 import SnowflakeView from '@/views/SnowflakeView.vue'
-import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
-    history: createWebHashHistory(),
-
-    // history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
             path: '/',
@@ -19,15 +17,9 @@ const router = createRouter({
             component: SnowflakeView,
         },
         {
-            path: '/f1',
-            name: 'f1',
-            children: [
-                {
-                    path: 'drivers',
-                    name: 'drivers',
-                    component: DriversView,
-                },
-            ],
+            path: '/drivers',
+            name: 'drivers',
+            component: DriversView,
         },
     ],
 })

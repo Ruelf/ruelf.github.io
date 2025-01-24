@@ -8,9 +8,7 @@ function bruh() {
 }
 </script>
 <template>
-    <div class="text-black">
-        Gaming
-    </div>
+    <div class="text-black">Gaming</div>
 
     <button type="button" class="text-red-500" @click="bruh">aa</button>
 </template>

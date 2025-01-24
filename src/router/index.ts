@@ -1,7 +1,8 @@
-import DriversView from '@/views/DriversView.vue'
-import HomeView from '@/views/HomeView.vue'
-import SnowflakeView from '@/views/SnowflakeView.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import DriverShow from '@/views/DriverShow.vue';
+import DriversView from '@/views/DriversView.vue';
+import HomeView from '@/views/HomeView.vue';
+import SnowflakeView from '@/views/SnowflakeView.vue';
+import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,9 +26,15 @@ const router = createRouter({
                     name: 'drivers',
                     component: DriversView,
                 },
+                {
+                    path: 'drivers/:id',
+                    name: 'driverShow',
+                    component: DriverShow,
+                    props: true,
+                },
             ],
         },
     ],
-})
+});
 
-export default router
+export default router;

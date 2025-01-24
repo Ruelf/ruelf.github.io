@@ -1,75 +1,80 @@
 <script setup lang="ts">
 import Card from '@/components/Card.vue';
-import { makeJolpicaRequest } from '@/helpers/helpers';
-import type { Driver, DriverTable, MRData } from '@/types/jolpica';
+import Table from '@/components/table/Table.vue';
+import Td from '@/components/table/Td.vue';
+import Th from '@/components/table/Th.vue';
+import Tr from '@/components/table/Tr.vue';
+import type { Driver } from '@/jolpica/Driver';
+import { Jolpica } from '@/jolpica/Jolpica';
+import type { Pagination } from '@/jolpica/Pagination';
 import { onMounted, ref } from 'vue';
 
-const drivers = ref<Driver[]>();
-const data = ref<MRData<DriverTable>>();
+const drivers = ref<Pagination<Driver>>();
 
 onMounted(() => {
-    refreshDrivers({ limit: 10 });
+    refreshDrivers({ limit: 12 });
 });
 
-async function refreshDrivers(params?: { limit?: number; offset?: number; }): Promise<void> {
-    const response = await makeJolpicaRequest<DriverTable>('/drivers', { params });
-    data.value = response.MRData;
-    drivers.value = response.MRData.DriverTable.Drivers;
+async function refreshDrivers(params?: { limit?: number; offset?: number }): Promise<void> {
+    drivers.value = await Jolpica.getDrivers(params);
 }
 
 function previousPage(): void {
-    if (!data.value) {
+    if (!drivers.value) {
         return;
     }
 
-    refreshDrivers({ limit: +data.value.limit, offset: +data.value.offset - +data.value.limit });
+    refreshDrivers({
+        limit: drivers.value.limit,
+        offset: drivers.value.offset - drivers.value.limit,
+    });
 }
 
 function nextPage(): void {
-    if (!data.value) {
+    if (!drivers.value) {
         return;
     }
 
-    refreshDrivers({ limit: +data.value.limit, offset: +data.value.offset + +data.value.limit });
+    refreshDrivers({
+        limit: drivers.value.limit,
+        offset: drivers.value.offset + drivers.value.limit,
+    });
 }
 </script>
 
 <template>
-    <Card class="p-4">
-        <table>
-            <thead>
-                <tr>
-                    <th>givenName</th>
-                    <th>familyName</th>
-                    <th>driverId</th>
-                    <th>dateOfBirth</th>
-                    <th>nationality</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="driver of drivers" :key="driver.driverId">
-                    <td>{{ driver.givenName }}</td>
-                    <td>{{ driver.familyName }}</td>
-                    <td>{{ driver.driverId }}</td>
-                    <td>{{ driver.dateOfBirth }}</td>
-                    <td>{{ driver.nationality }}</td>
-                </tr>
-            </tbody>
-        </table>
+    <Card>
+        <Table>
+            <template #head>
+                <Tr>
+                    <Th>givenName</Th>
+                    <Th>familyName</Th>
+                    <Th>id</Th>
+                    <Th>dateOfBirth</Th>
+                    <Th>nationality</Th>
+                </Tr>
+            </template>
+            <template #body>
+                <Tr v-for="driver of drivers?.data" :key="driver.id">
+                    <Td>{{ driver.givenName }}</Td>
+                    <Td>{{ driver.familyName }}</Td>
+                    <Td>{{ driver.id }}</Td>
+                    <Td>{{ driver.dateOfBirth.toLocaleDateString() }}</Td>
+                    <Td>{{ driver.nationality }}</Td>
+                </Tr>
+            </template>
+        </Table>
 
-        <template v-if="data">
-            <div class="mt-4">
-                Page {{ +data.offset / +data.limit + 1 }} of {{ Math.ceil(+data.total / +data.limit) }}
+        <div class="p-4">
+            <template v-if="drivers">
+                <div class="mt-4">Page {{ drivers.currentPage }} of {{ drivers.totalPages }}</div>
+                <div class="mt-4">Showing {{ drivers.from }} to {{ drivers.to }} of {{ drivers.total }}</div>
+            </template>
+
+            <div class="flex gap-4">
+                <button class="border border-red-500" @click="previousPage">Previous page</button>
+                <button class="border border-red-500" @click="nextPage">Next page</button>
             </div>
-            <div class="mt-4">
-                Showing {{ data.offset }} to {{ +data.offset + +data.limit }} of {{ data.total }}
-            </div>
-        </template>
-
-
-        <div class="flex gap-4">
-            <button class="border border-red-500" @click="previousPage">Previous page</button>
-            <button class="border border-red-500" @click="nextPage">Next page</button>
         </div>
     </Card>
 </template>

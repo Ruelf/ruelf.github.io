@@ -15,7 +15,7 @@ export default defineConfigWithVueTs(
             'vue/multi-word-component-names': [
                 'error',
                 {
-                    ignores: ['Card', 'Container'],
+                    ignores: ['Card', 'Container', 'Table', 'Tr', 'Th', 'Td'],
                 },
             ],
         },

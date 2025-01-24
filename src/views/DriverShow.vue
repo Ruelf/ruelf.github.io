@@ -55,6 +55,7 @@ function nextPage(): void {
 
 <template>
     <Card>
+        <div class="text-4xl p-4">{{ driver?.givenName }} {{ driver?.familyName }}</div>
         <Table>
             <template #head>
                 <Tr>

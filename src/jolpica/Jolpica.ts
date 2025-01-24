@@ -12,7 +12,7 @@ export interface ApiOptions {
 }
 
 export class Jolpica {
-    static baseUrl: string = 'https://api.jolpi.ca/ergast/f1';
+    public static baseUrl: string = 'https://api.jolpi.ca/ergast/f1';
 
     public static async request<T extends Json>(path: string, config?: AxiosRequestConfig): Promise<Response<T>> {
         const response = await axios.get<Response<T>>(this.baseUrl + path + '.json', config);

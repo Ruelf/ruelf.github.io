@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Vite",
+      "type": "shell",
+      "command": "npm run dev",
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "icon": {
+        "color": "terminal.ansiYellow",
+        "id": "zap"
+      }
+    }
+  ]
+}

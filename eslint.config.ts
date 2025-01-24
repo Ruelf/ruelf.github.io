@@ -11,6 +11,14 @@ export default defineConfigWithVueTs(
     {
         name: 'app/files-to-lint',
         files: ['**/*.{ts,mts,tsx,vue}'],
+        rules: {
+            'vue/multi-word-component-names': [
+                'error',
+                {
+                    ignores: ['Card', 'Container'],
+                },
+            ],
+        },
     },
 
     {

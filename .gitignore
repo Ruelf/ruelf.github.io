@@ -20,12 +20,13 @@ coverage
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/*.example.json
 .idea
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+__pycache__
 
 *.tsbuildinfo
-__pycache__

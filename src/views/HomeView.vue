@@ -10,5 +10,11 @@ function bruh() {
 <template>
     <div class="text-black">Gaming</div>
 
-    <button type="button" class="text-red-500" @click="bruh">aa</button>
+    <button
+        type="button"
+        class="text-red-500"
+        @click="bruh"
+    >
+        aa
+    </button>
 </template>

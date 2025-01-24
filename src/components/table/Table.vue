@@ -4,7 +4,10 @@
             <slot name="head" />
         </thead>
 
-        <tbody v-if="$slots.body" class="divide-y divide-gray-200 dark:divide-gray-600">
+        <tbody
+            v-if="$slots.body"
+            class="divide-y divide-gray-200 dark:divide-gray-600"
+        >
             <slot name="body" />
         </tbody>
 

@@ -65,7 +65,10 @@ function nextPage(): void {
                 </Tr>
             </template>
             <template #body>
-                <Tr v-for="race of races?.data" :key="race.name">
+                <Tr
+                    v-for="race of races?.data"
+                    :key="race.name"
+                >
                     <Td>{{ race.season }} {{ race.name }}</Td>
                     <Td>
                         {{ race.circuit.name }}, {{ race.circuit.location.locality }},
@@ -85,8 +88,18 @@ function nextPage(): void {
             </template>
 
             <div class="flex gap-4">
-                <button class="border border-red-500" @click="previousPage">Previous page</button>
-                <button class="border border-red-500" @click="nextPage">Next page</button>
+                <button
+                    class="border border-red-500"
+                    @click="previousPage"
+                >
+                    Previous page
+                </button>
+                <button
+                    class="border border-red-500"
+                    @click="nextPage"
+                >
+                    Next page
+                </button>
             </div>
         </div>
     </Card>

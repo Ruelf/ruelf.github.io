@@ -55,7 +55,10 @@ function nextPage(): void {
                 </Tr>
             </template>
             <template #body>
-                <Tr v-for="driver of drivers?.data" :key="driver.id">
+                <Tr
+                    v-for="driver of drivers?.data"
+                    :key="driver.id"
+                >
                     <Td>{{ driver.givenName }}</Td>
                     <Td>{{ driver.familyName }}</Td>
                     <Td>{{ driver.id }}</Td>
@@ -72,8 +75,18 @@ function nextPage(): void {
             </template>
 
             <div class="flex gap-4">
-                <button class="border border-red-500" @click="previousPage">Previous page</button>
-                <button class="border border-red-500" @click="nextPage">Next page</button>
+                <button
+                    class="border border-red-500"
+                    @click="previousPage"
+                >
+                    Previous page
+                </button>
+                <button
+                    class="border border-red-500"
+                    @click="nextPage"
+                >
+                    Next page
+                </button>
             </div>
         </div>
     </Card>

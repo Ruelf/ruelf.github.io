@@ -17,9 +17,15 @@ const router = createRouter({
             component: SnowflakeView,
         },
         {
-            path: '/drivers',
-            name: 'drivers',
-            component: DriversView,
+            path: '/f1',
+            name: 'f1',
+            children: [
+                {
+                    path: 'drivers',
+                    name: 'drivers',
+                    component: DriversView,
+                },
+            ],
         },
     ],
 })

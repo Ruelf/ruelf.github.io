@@ -5,7 +5,7 @@ import Td from '@/components/table/Td.vue';
 import Th from '@/components/table/Th.vue';
 import Tr from '@/components/table/Tr.vue';
 import type { Driver } from '@/jolpica/Driver';
-import { Jolpica } from '@/jolpica/Jolpica';
+import { Jolpica, type ApiOptions } from '@/jolpica/Jolpica';
 import type { Pagination } from '@/jolpica/Pagination';
 import { onMounted, ref } from 'vue';
 
@@ -15,8 +15,8 @@ onMounted(() => {
     refreshDrivers({ limit: 12 });
 });
 
-async function refreshDrivers(params?: { limit?: number; offset?: number }): Promise<void> {
-    drivers.value = await Jolpica.getDrivers(params);
+async function refreshDrivers(options?: ApiOptions): Promise<void> {
+    drivers.value = await Jolpica.getDrivers(options);
 }
 
 function previousPage(): void {

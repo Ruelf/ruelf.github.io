@@ -1,6 +1,7 @@
 import DriverShow from '@/views/DriverShow.vue';
 import DriversView from '@/views/DriversView.vue';
 import HomeView from '@/views/HomeView.vue';
+import PdokView from '@/views/PdokView.vue';
 import SnowflakeView from '@/views/SnowflakeView.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
@@ -16,6 +17,11 @@ const router = createRouter({
             path: '/snowflake',
             name: 'snowflake',
             component: SnowflakeView,
+        },
+        {
+            path: '/pdok',
+            name: 'pdok',
+            component: PdokView,
         },
         {
             path: '/f1',

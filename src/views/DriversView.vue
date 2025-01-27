@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Card from '@/components/Card.vue';
+import PaginationButtons from '@/components/PaginationButtons.vue';
 import Table from '@/components/table/Table.vue';
 import Td from '@/components/table/Td.vue';
 import Th from '@/components/table/Th.vue';
@@ -44,50 +45,38 @@ function nextPage(): void {
 
 <template>
     <Card>
-        <Table>
-            <template #head>
-                <Tr>
-                    <Th>givenName</Th>
-                    <Th>familyName</Th>
-                    <Th>id</Th>
-                    <Th>dateOfBirth</Th>
-                    <Th>nationality</Th>
-                </Tr>
-            </template>
-            <template #body>
-                <Tr
-                    v-for="driver of drivers?.data"
-                    :key="driver.id"
-                >
-                    <Td>{{ driver.givenName }}</Td>
-                    <Td>{{ driver.familyName }}</Td>
-                    <Td>{{ driver.id }}</Td>
-                    <Td>{{ driver.dateOfBirth.toLocaleDateString() }}</Td>
-                    <Td>{{ driver.nationality }}</Td>
-                </Tr>
-            </template>
-        </Table>
+        <template v-if="drivers">
+            <Table>
+                <template #head>
+                    <Tr>
+                        <Th>givenName</Th>
+                        <Th>familyName</Th>
+                        <Th>id</Th>
+                        <Th>dateOfBirth</Th>
+                        <Th>nationality</Th>
+                    </Tr>
+                </template>
+                <template #body>
+                    <Tr
+                        v-for="driver of drivers.data"
+                        :key="driver.id"
+                    >
+                        <Td>{{ driver.givenName }}</Td>
+                        <Td>{{ driver.familyName }}</Td>
+                        <Td>{{ driver.id }}</Td>
+                        <Td>{{ driver.dateOfBirth.toLocaleDateString() }}</Td>
+                        <Td>{{ driver.nationality }}</Td>
+                    </Tr>
+                </template>
+            </Table>
 
-        <div class="p-4">
-            <template v-if="drivers">
-                <div class="mt-4">Page {{ drivers.currentPage }} of {{ drivers.totalPages }}</div>
-                <div class="mt-4">Showing {{ drivers.from }} to {{ drivers.to }} of {{ drivers.total }}</div>
-            </template>
-
-            <div class="flex gap-4">
-                <button
-                    class="border border-red-500"
-                    @click="previousPage"
-                >
-                    Previous page
-                </button>
-                <button
-                    class="border border-red-500"
-                    @click="nextPage"
-                >
-                    Next page
-                </button>
+            <div class="p-4">
+                <PaginationButtons
+                    :data="drivers"
+                    @previous-page="previousPage"
+                    @next-page="nextPage"
+                />
             </div>
-        </div>
+        </template>
     </Card>
 </template>

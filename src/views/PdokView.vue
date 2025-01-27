@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Card from '@/components/Card.vue';
+import InputField from '@/components/InputField.vue';
 import Table from '@/components/table/Table.vue';
 import Td from '@/components/table/Td.vue';
 import Th from '@/components/table/Th.vue';
@@ -29,10 +30,9 @@ async function onChange(): Promise<void> {
 <template>
     <Card>
         <div class="p-4">
-            <input
+            <InputField
                 v-model="inputText"
                 @keydown.enter="onChange"
-                class="dark:bg-gray-800"
             />
         </div>
         <div class="mt-4">

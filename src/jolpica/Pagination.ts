@@ -1,5 +1,3 @@
-import type { Json } from '@/types/utility';
-
 interface MRData {
     xmlns: string;
     series: string;
@@ -9,7 +7,7 @@ interface MRData {
     total: string;
 }
 
-export class Pagination<TData extends Json> {
+export class Pagination<TData = unknown> {
     limit: number;
     offset: number;
     total: number;

@@ -1,6 +1,6 @@
 interface MRData {
-    xmlns: string;
-    series: string;
+    xmlns: '';
+    series: 'f1';
     url: string;
     limit: string;
     offset: string;

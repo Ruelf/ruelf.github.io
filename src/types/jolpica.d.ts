@@ -1,6 +1,10 @@
+import type { CircuitApiData } from '@/jolpica/Circuit';
+import type { DriverApiData } from '@/jolpica/Driver';
+import type { RaceApiData } from '@/jolpica/Race';
+
 export type MRData<T> = T & {
-    xmlns: string;
-    series: string;
+    xmlns: '';
+    series: 'f1';
     url: string;
     limit: string;
     offset: string;
@@ -13,13 +17,20 @@ export interface Response<T> {
 
 export interface DriverTable {
     DriverTable: {
-        Drivers: Driver[];
+        Drivers: DriverApiData[];
     };
 }
 export interface RaceTable {
     RaceTable: {
-        Races: Race[];
+        Races: RaceApiData[];
     };
 }
+export interface CircuitTable {
+    CircuitTable: {
+        Circuits: CircuitApiData[];
+    };
+}
+
+export namespace Api {}
 
 // export interface Race {}

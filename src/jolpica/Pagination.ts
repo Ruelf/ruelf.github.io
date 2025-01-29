@@ -1,11 +1,4 @@
-interface MRData {
-    xmlns: '';
-    series: 'f1';
-    url: string;
-    limit: string;
-    offset: string;
-    total: string;
-}
+import type { MRData } from '@/types/jolpica';
 
 export class Pagination<TData = unknown> {
     limit: number;

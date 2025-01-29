@@ -2,7 +2,7 @@ import type { CircuitApiData } from '@/jolpica/Circuit';
 import type { DriverApiData } from '@/jolpica/Driver';
 import type { RaceApiData } from '@/jolpica/Race';
 
-export type MRData<T> = T & {
+export type MRData<T = object> = T & {
     xmlns: '';
     series: 'f1';
     url: string;

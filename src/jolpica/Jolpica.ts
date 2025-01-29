@@ -156,7 +156,7 @@ export class Endpoint<T extends keyof Endpoints> {
     public get url(): string {
         return this.getUrl(
             this.params
-                ? this.path.replace(/\{([a-z]+)\}/, (fullMatch: string, name: keyof Endpoints[T]['params']): string => {
+                ? this.path.replace(/\{([a-z]+)}/, (fullMatch: string, name: keyof Endpoints[T]['params']): string => {
                       return name in this.params ? `${this.params[name]}` : fullMatch;
                   })
                 : this.path,

@@ -1,20 +1,9 @@
-<script setup lang="ts">
-import router from '@/router';
-import { useRouter } from 'vue-router';
-
-console.log(2);
-function bruh() {
-    router.push({ name: 'snowflake' });
-}
-</script>
 <template>
-    <div class="text-black">Gaming</div>
+    <div class="flex items-center">
+        <div class="text-3xl">Yoo whats</div>
+        <div class="inline ms-8 text-7xl text-green-500 rotate-12 scale-150">up!</div>
+    </div>
 
-    <button
-        type="button"
-        class="text-red-500"
-        @click="bruh"
-    >
-        aa
-    </button>
+    <div class="text-3xl"></div>
+    <div class="text-gray-400 mt-8">Welcome to this epic site. I put random stuff here.</div>
 </template>

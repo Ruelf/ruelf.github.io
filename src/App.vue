@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Container from './components/Container.vue';
-import NavBar from './NavBar.vue';
+import NavBar from './components/nav/NavBar.vue';
 </script>
 
 <template>

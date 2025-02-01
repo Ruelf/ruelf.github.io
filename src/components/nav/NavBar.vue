@@ -29,10 +29,7 @@ const navItems: NavItem[] = [
     <nav class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
         <div class="p-4 max-w-7xl mx-auto">
             <div class="flex items-center gap-4">
-                <RouterLink
-                    :to="{ name: 'home' }"
-                    class="group"
-                >
+                <RouterLink :to="{ name: 'home' }" class="group">
                     <img
                         src="@/assets/avatar.jpeg"
                         class="size-10 rounded-full shadow-md group-hover:brightness-125 group-hover:ring-1"

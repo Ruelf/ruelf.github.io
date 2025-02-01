@@ -57,10 +57,7 @@ function nextPage(): void {
                     </Tr>
                 </template>
                 <template #body>
-                    <Tr
-                        v-for="driver of drivers.data"
-                        :key="driver.id"
-                    >
+                    <Tr v-for="driver of drivers.data" :key="driver.id">
                         <Td>{{ driver.givenName }}</Td>
                         <Td>{{ driver.familyName }}</Td>
                         <Td>{{ driver.id }}</Td>
@@ -71,11 +68,7 @@ function nextPage(): void {
             </Table>
 
             <div class="p-4">
-                <PaginationButtons
-                    :data="drivers"
-                    @previous-page="previousPage"
-                    @next-page="nextPage"
-                />
+                <PaginationButtons :data="drivers" @previous-page="previousPage" @next-page="nextPage" />
             </div>
         </template>
     </Card>

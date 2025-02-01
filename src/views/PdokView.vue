@@ -30,10 +30,7 @@ async function onChange(): Promise<void> {
 <template>
     <Card>
         <div class="p-4">
-            <InputField
-                v-model="inputText"
-                @keydown.enter="onChange"
-            />
+            <InputField v-model="inputText" @keydown.enter="onChange" />
         </div>
         <div class="mt-4">
             <Table>
@@ -48,10 +45,7 @@ async function onChange(): Promise<void> {
                     </Tr>
                 </template>
                 <template #body>
-                    <Tr
-                        v-for="address of data"
-                        :key="address.id"
-                    >
+                    <Tr v-for="address of data" :key="address.id">
                         <Td>{{ address.straatnaam }} {{ address.huis_nlt }}</Td>
                         <Td>{{ address.postcode }}</Td>
                         <Td>{{ address.wijknaam }}</Td>

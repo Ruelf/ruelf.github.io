@@ -140,6 +140,14 @@ export type Endpoints = {
         };
         returns: RaceTable;
     };
+
+    '/drivers/{id}/results/{position}': {
+        params: {
+            id: string;
+            position: number;
+        };
+        returns: RaceTable;
+    };
 };
 
 export class Endpoint<T extends keyof Endpoints> {

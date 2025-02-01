@@ -9,3 +9,20 @@ export async function makeJolpicaRequest<T extends Json>(
     const response = await axios.get<Response<T>>('https://api.jolpi.ca/ergast/f1' + path + '.json', config);
     return response.data;
 }
+
+// Decorator I'll never use
+export function debounce<A, R>(ms: number): (callback: (...args: A[]) => R) => (...args: A[]) => void {
+    return function (callback: (...args: A[]) => R): (...args: A[]) => void {
+        let timeout: number;
+
+        return function (...args: A[]): void {
+            if (timeout) {
+                clearTimeout(timeout);
+            }
+
+            timeout = setTimeout(() => {
+                callback(...args);
+            }, ms);
+        };
+    };
+}

@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import PromiseTest from '@/components/PromiseTest.vue';
-import { Jolpica } from '@/jolpica/Jolpica';
+import { Jolpica } from '@/modules/jolpica';
+import { ref } from 'vue';
+
+const testData = ref();
 </script>
 
 <template>
+    {{ testData }}
     <PromiseTest :promise="Jolpica.getSeasonRound('current', 'next')" v-slot="{ data: race }">
         <template v-if="race">
             <div class="text-3xl">{{ race.season }} {{ race.name }}</div>

@@ -4,10 +4,7 @@ import Table from '@/components/table/Table.vue';
 import Td from '@/components/table/Td.vue';
 import Th from '@/components/table/Th.vue';
 import Tr from '@/components/table/Tr.vue';
-import { Driver } from '@/jolpica/Driver';
-import { Jolpica } from '@/jolpica/Jolpica';
-import type { Pagination } from '@/jolpica/Pagination';
-import type { Race } from '@/jolpica/Race';
+import { Driver, Jolpica, type Pagination, type Race } from '@/modules/jolpica';
 import { onMounted, ref } from 'vue';
 
 const props = defineProps<{

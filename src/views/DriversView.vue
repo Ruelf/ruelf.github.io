@@ -5,9 +5,7 @@ import Table from '@/components/table/Table.vue';
 import Td from '@/components/table/Td.vue';
 import Th from '@/components/table/Th.vue';
 import Tr from '@/components/table/Tr.vue';
-import type { Driver } from '@/jolpica/Driver';
-import { Jolpica, type ApiOptions } from '@/jolpica/Jolpica';
-import type { Pagination } from '@/jolpica/Pagination';
+import { Jolpica, type ApiOptions, type Driver, type Pagination } from '@/modules/jolpica';
 import { onMounted, ref } from 'vue';
 
 const drivers = ref<Pagination<Driver>>();

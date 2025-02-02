@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Pagination } from '@/jolpica/Pagination';
+import type { Pagination } from '@/modules/jolpica';
 import PrimaryButton from './PrimaryButton.vue';
 
 defineProps<{

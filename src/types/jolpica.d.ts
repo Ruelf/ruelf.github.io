@@ -1,6 +1,4 @@
-import type { CircuitApiData } from '@/jolpica/Circuit';
-import type { DriverApiData } from '@/jolpica/Driver';
-import type { RaceApiData } from '@/jolpica/Race';
+import type { CircuitApiData, DriverApiData, RaceApiData } from '@/modules/jolpica';
 
 export type MRData<T = object> = T & {
     xmlns: '';

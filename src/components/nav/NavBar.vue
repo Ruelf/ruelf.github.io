@@ -28,21 +28,21 @@ const navItems: NavItem[] = [
 </script>
 
 <template>
-    <nav class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
-        <div class="p-4 max-w-7xl mx-auto">
+    <nav class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
+        <div class="mx-auto max-w-7xl p-4">
             <div class="flex items-center gap-4">
                 <RouterLink :to="{ name: 'home' }" class="group">
                     <img
                         src="@/assets/avatar.jpeg"
-                        class="size-10 rounded-full shadow-md group-hover:brightness-125 group-hover:ring-1"
+                        class="size-10 rounded-full shadow-md group-hover:ring-1 group-hover:brightness-125"
                     />
                 </RouterLink>
                 <!-- Nav -->
-                <div class="flex items-center gap-4 h-10 py-6">
+                <div class="flex h-10 items-center gap-4 py-6">
                     <div
                         v-for="item of navItems"
                         :key="item.title"
-                        class="group relative p-2 hover:bg-gray-700 rounded-md"
+                        class="group relative rounded-md p-2 hover:bg-gray-700"
                     >
                         <RouterLink v-if="item.route" :to="{ name: item.route }">
                             {{ item.title }}
@@ -52,13 +52,13 @@ const navItems: NavItem[] = [
                         </template>
                         <div
                             v-if="item.children.length"
-                            class="hidden group-hover:grid mt-2 absolute left-0 min-w-full bg-gray-700 py-2 rounded-md"
+                            class="absolute left-0 mt-2 hidden min-w-full rounded-md bg-gray-700 py-2 group-hover:grid"
                         >
                             <RouterLink
                                 v-for="child of item.children"
                                 :key="child.title"
                                 :to="{ name: child.route }"
-                                class="py-2 px-4 hover:bg-gray-600"
+                                class="px-4 py-2 hover:bg-gray-600"
                             >
                                 {{ child.title }}
                             </RouterLink>

@@ -1,5 +1,5 @@
 <template>
-    <button class="inline-flex items-center px-4 py-2 rounded-md font-semibold text-xs uppercase tracking-widest">
+    <button class="inline-flex items-center rounded-md px-4 py-2 text-xs font-semibold uppercase tracking-widest">
         <slot />
     </button>
 </template>

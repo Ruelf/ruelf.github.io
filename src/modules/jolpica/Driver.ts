@@ -1,4 +1,4 @@
-import { Jolpica, type ApiOptions } from './Jolpica';
+import { type ApiOptions, Jolpica } from './Jolpica';
 import type { Pagination } from './Pagination';
 import type { Race } from './Race';
 

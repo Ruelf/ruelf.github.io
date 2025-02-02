@@ -1,10 +1,11 @@
 import type { MRData, Response } from '@/types/jolpica';
 import type { AxiosRequestConfig } from 'axios';
 import axios from 'axios';
+
+import { Circuit, type CircuitApiData } from './Circuit';
 import { Driver, type DriverApiData } from './Driver';
 import { Pagination } from './Pagination';
 import { Race, type RaceApiData } from './Race';
-import { Circuit, type CircuitApiData } from './Circuit';
 
 export interface ApiOptions {
     limit?: number;

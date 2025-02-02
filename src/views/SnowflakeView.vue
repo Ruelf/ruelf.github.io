@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 
-const now = ref<Date>()
+const now = ref<Date>();
 
 function update(): void {
-    now.value = new Date()
+    now.value = new Date();
 }
 
-setInterval(update, 10)
+setInterval(update, 10);
 </script>
 
 <template>

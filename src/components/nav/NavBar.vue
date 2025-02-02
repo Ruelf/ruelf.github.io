@@ -1,8 +1,8 @@
 <script setup lang="ts">
 interface NavItem {
-    title: string
-    route?: string
-    children: { title: string; route: string }[]
+    title: string;
+    route?: string;
+    children: { title: string; route: string }[];
 }
 
 const navItems: NavItem[] = [
@@ -24,7 +24,7 @@ const navItems: NavItem[] = [
             },
         ],
     },
-]
+];
 </script>
 
 <template>

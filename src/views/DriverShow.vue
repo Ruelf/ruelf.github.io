@@ -1,55 +1,55 @@
 <script setup lang="ts">
-import Card from '@/components/Card.vue'
-import Table from '@/components/table/Table.vue'
-import Td from '@/components/table/Td.vue'
-import Th from '@/components/table/Th.vue'
-import Tr from '@/components/table/Tr.vue'
-import { Driver } from '@/jolpica/Driver'
-import { Jolpica } from '@/jolpica/Jolpica'
-import type { Pagination } from '@/jolpica/Pagination'
-import type { Race } from '@/jolpica/Race'
-import { onMounted, ref } from 'vue'
+import Card from '@/components/Card.vue';
+import Table from '@/components/table/Table.vue';
+import Td from '@/components/table/Td.vue';
+import Th from '@/components/table/Th.vue';
+import Tr from '@/components/table/Tr.vue';
+import { Driver } from '@/jolpica/Driver';
+import { Jolpica } from '@/jolpica/Jolpica';
+import type { Pagination } from '@/jolpica/Pagination';
+import type { Race } from '@/jolpica/Race';
+import { onMounted, ref } from 'vue';
 
 const props = defineProps<{
-    id: string
-}>()
+    id: string;
+}>();
 
-const driver = ref<Driver | null>()
-const races = ref<Pagination<Race>>()
+const driver = ref<Driver | null>();
+const races = ref<Pagination<Race>>();
 
 onMounted(async () => {
-    driver.value = await Jolpica.getDriver(props.id)
-    refreshRaces({ limit: 10 })
-})
+    driver.value = await Jolpica.getDriver(props.id);
+    refreshRaces({ limit: 10 });
+});
 
 async function refreshRaces(params?: { limit?: number; offset?: number }): Promise<void> {
     if (driver.value) {
-        console.log(driver.value)
+        console.log(driver.value);
 
-        races.value = await driver.value.getRacesWithResults(params)
+        races.value = await driver.value.getRacesWithResults(params);
     }
 }
 
 function previousPage(): void {
     if (!races.value) {
-        return
+        return;
     }
 
     refreshRaces({
         limit: races.value.limit,
         offset: races.value.offset - races.value.limit,
-    })
+    });
 }
 
 function nextPage(): void {
     if (!races.value) {
-        return
+        return;
     }
 
     refreshRaces({
         limit: races.value.limit,
         offset: races.value.offset + races.value.limit,
-    })
+    });
 }
 </script>
 

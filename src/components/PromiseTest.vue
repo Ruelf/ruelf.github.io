@@ -1,15 +1,15 @@
 <script setup lang="ts" generic="T">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue';
 
 const props = defineProps<{
-    promise: Promise<T>
-}>()
+    promise: Promise<T>;
+}>();
 
-const data = ref<T>()
+const data = ref<T>();
 
 onMounted(async () => {
-    data.value = await props.promise
-})
+    data.value = await props.promise;
+});
 </script>
 
 <template>

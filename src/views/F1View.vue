@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import PromiseTest from '@/components/PromiseTest.vue'
-import { Jolpica } from '@/jolpica/Jolpica'
+import PromiseTest from '@/components/PromiseTest.vue';
+import { Jolpica } from '@/jolpica/Jolpica';
 </script>
 
 <template>

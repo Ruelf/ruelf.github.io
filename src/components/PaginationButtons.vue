@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import type { Pagination } from '@/jolpica/Pagination'
-import PrimaryButton from './PrimaryButton.vue'
+import type { Pagination } from '@/jolpica/Pagination';
+import PrimaryButton from './PrimaryButton.vue';
 
 defineProps<{
-    data: Pagination
-}>()
+    data: Pagination;
+}>();
 
 defineEmits<{
-    (event: 'previousPage'): unknown
-    (event: 'nextPage'): unknown
-}>()
+    (event: 'previousPage'): unknown;
+    (event: 'nextPage'): unknown;
+}>();
 </script>
 
 <template>

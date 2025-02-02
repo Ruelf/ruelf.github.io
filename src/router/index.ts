@@ -1,10 +1,10 @@
-import DriverShow from '@/views/DriverShow.vue'
-import DriversView from '@/views/DriversView.vue'
-import F1View from '@/views/F1View.vue'
-import HomeView from '@/views/HomeView.vue'
-import PdokView from '@/views/PdokView.vue'
-import SnowflakeView from '@/views/SnowflakeView.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import DriverShow from '@/views/DriverShow.vue';
+import DriversView from '@/views/DriversView.vue';
+import F1View from '@/views/F1View.vue';
+import HomeView from '@/views/HomeView.vue';
+import PdokView from '@/views/PdokView.vue';
+import SnowflakeView from '@/views/SnowflakeView.vue';
+import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,6 +43,6 @@ const router = createRouter({
             ],
         },
     ],
-})
+});
 
-export default router
+export default router;

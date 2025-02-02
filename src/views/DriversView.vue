@@ -1,45 +1,45 @@
 <script setup lang="ts">
-import Card from '@/components/Card.vue'
-import PaginationButtons from '@/components/PaginationButtons.vue'
-import Table from '@/components/table/Table.vue'
-import Td from '@/components/table/Td.vue'
-import Th from '@/components/table/Th.vue'
-import Tr from '@/components/table/Tr.vue'
-import type { Driver } from '@/jolpica/Driver'
-import { Jolpica, type ApiOptions } from '@/jolpica/Jolpica'
-import type { Pagination } from '@/jolpica/Pagination'
-import { onMounted, ref } from 'vue'
+import Card from '@/components/Card.vue';
+import PaginationButtons from '@/components/PaginationButtons.vue';
+import Table from '@/components/table/Table.vue';
+import Td from '@/components/table/Td.vue';
+import Th from '@/components/table/Th.vue';
+import Tr from '@/components/table/Tr.vue';
+import type { Driver } from '@/jolpica/Driver';
+import { Jolpica, type ApiOptions } from '@/jolpica/Jolpica';
+import type { Pagination } from '@/jolpica/Pagination';
+import { onMounted, ref } from 'vue';
 
-const drivers = ref<Pagination<Driver>>()
+const drivers = ref<Pagination<Driver>>();
 
 onMounted(() => {
-    refreshDrivers({ limit: 12 })
-})
+    refreshDrivers({ limit: 12 });
+});
 
 async function refreshDrivers(options?: ApiOptions): Promise<void> {
-    drivers.value = await Jolpica.getDrivers(options)
+    drivers.value = await Jolpica.getDrivers(options);
 }
 
 function previousPage(): void {
     if (!drivers.value) {
-        return
+        return;
     }
 
     refreshDrivers({
         limit: drivers.value.limit,
         offset: drivers.value.offset - drivers.value.limit,
-    })
+    });
 }
 
 function nextPage(): void {
     if (!drivers.value) {
-        return
+        return;
     }
 
     refreshDrivers({
         limit: drivers.value.limit,
         offset: drivers.value.offset + drivers.value.limit,
-    })
+    });
 }
 </script>
 

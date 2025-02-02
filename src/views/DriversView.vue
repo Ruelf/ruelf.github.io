@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import Card from '@/components/Card.vue';
 import PaginationButtons from '@/components/PaginationButtons.vue';
-import Table from '@/components/table/Table.vue';
-import Td from '@/components/table/Td.vue';
-import Th from '@/components/table/Th.vue';
-import Tr from '@/components/table/Tr.vue';
+import { Table, Td, Th, Tr } from '@/components/table';
 import { type ApiOptions, type Driver, Jolpica, type Pagination } from '@/modules/jolpica';
 import { onMounted, ref } from 'vue';
 

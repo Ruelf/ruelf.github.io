@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import Card from '@/components/Card.vue';
 import InputField from '@/components/InputField.vue';
-import Table from '@/components/table/Table.vue';
-import Td from '@/components/table/Td.vue';
-import Th from '@/components/table/Th.vue';
-import Tr from '@/components/table/Tr.vue';
+import { Table, Td, Th, Tr } from '@/components/table';
 import type { Pdok } from '@/types/pdok';
 import axios from 'axios';
 import { ref } from 'vue';

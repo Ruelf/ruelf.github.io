@@ -12,7 +12,7 @@ export interface ApiOptions {
 }
 
 export type Round = number | 'last' | 'next'
-export type Season = number
+export type Season = number | 'current'
 export type Status =
     | 'Finished'
     | 'Disqualified'
@@ -148,6 +148,16 @@ export type Endpoints = {
         }
         returns: RaceTable
     }
+
+    // Races
+
+    '/{season}/{round}': {
+        params: {
+            season: Season
+            round: Round
+        }
+        returns: RaceTable
+    }
 }
 
 export class Endpoint<T extends keyof Endpoints> {
@@ -164,7 +174,7 @@ export class Endpoint<T extends keyof Endpoints> {
     public get url(): string {
         return this.getUrl(
             this.params
-                ? this.path.replace(/\{([a-z]+)}/, (fullMatch: string, name: keyof Endpoints[T]['params']): string => {
+                ? this.path.replace(/\{([a-z]+)}/g, (fullMatch: string, name: keyof Endpoints[T]['params']): string => {
                       return name in this.params ? `${this.params[name]}` : fullMatch
                   })
                 : this.path,
@@ -186,6 +196,8 @@ export class Jolpica {
         const config: AxiosRequestConfig = {
             params: options,
         }
+        console.log(endpoint.url)
+
         const response = await axios.get<Response<Endpoints[T]['returns']>>(endpoint.url, config)
         return response.data
     }
@@ -255,5 +267,13 @@ export class Jolpica {
             MRData,
             MRData.RaceTable.Races.map((race) => new Race(race)),
         )
+    }
+
+    // Races
+
+    public static async getSeasonRound(season: Season, round: Round, options?: ApiOptions): Promise<Race | null> {
+        const { MRData } = await this.request('/{season}/{round}', { season, round }, options)
+
+        return +MRData.total == 0 ? null : new Race(MRData.RaceTable.Races[0])
     }
 }

@@ -1,12 +1,14 @@
 <script setup lang="ts">
 interface NavItem {
     title: string
+    route?: string
     children: { title: string; route: string }[]
 }
 
 const navItems: NavItem[] = [
     {
         title: 'Formula 1',
+        route: 'f1',
         children: [{ title: 'Drivers', route: 'drivers' }],
     },
     {
@@ -42,7 +44,12 @@ const navItems: NavItem[] = [
                         :key="item.title"
                         class="group relative p-2 hover:bg-gray-700 rounded-md"
                     >
-                        {{ item.title }}
+                        <RouterLink v-if="item.route" :to="{ name: item.route }">
+                            {{ item.title }}
+                        </RouterLink>
+                        <template v-else>
+                            {{ item.title }}
+                        </template>
                         <div
                             v-if="item.children.length"
                             class="hidden group-hover:grid mt-2 absolute left-0 min-w-full bg-gray-700 py-2 rounded-md"

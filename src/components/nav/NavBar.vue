@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
+
 interface NavItem {
     title: string;
     route?: string;
@@ -37,34 +39,20 @@ const navItems: NavItem[] = [
                         class="size-10 rounded-full shadow-md group-hover:ring-1 group-hover:brightness-125"
                     />
                 </RouterLink>
-                <!-- Nav -->
-                <div class="flex h-10 items-center gap-4 py-6">
-                    <div
-                        v-for="item of navItems"
-                        :key="item.title"
-                        class="group relative rounded-md p-2 hover:bg-gray-700"
-                    >
-                        <RouterLink v-if="item.route" :to="{ name: item.route }">
-                            {{ item.title }}
-                        </RouterLink>
-                        <template v-else>
-                            {{ item.title }}
-                        </template>
-                        <div
-                            v-if="item.children.length"
-                            class="absolute left-0 mt-2 hidden min-w-full rounded-md bg-gray-700 py-2 group-hover:grid"
-                        >
-                            <RouterLink
-                                v-for="child of item.children"
-                                :key="child.title"
-                                :to="{ name: child.route }"
-                                class="px-4 py-2 hover:bg-gray-600"
-                            >
+
+                <Menu v-for="item of navItems" :key="item.title" as="div" class="relative inline-block text-left">
+                    <MenuButton class="rounded-md p-2 hover:bg-gray-700">
+                        {{ item.title }}
+                    </MenuButton>
+
+                    <MenuItems class="absolute left-0 mt-2 min-w-32 overflow-hidden rounded-md dark:bg-gray-700">
+                        <MenuItem v-for="child of item.children" :key="child.title">
+                            <RouterLink :to="{ name: child.route }" class="block px-4 py-2 dark:hover:bg-gray-600">
                                 {{ child.title }}
                             </RouterLink>
-                        </div>
-                    </div>
-                </div>
+                        </MenuItem>
+                    </MenuItems>
+                </Menu>
             </div>
         </div>
     </nav>

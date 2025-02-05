@@ -63,7 +63,7 @@ function nextPage(): void {
             </Table>
 
             <div class="p-4">
-                <PaginationButtons :data="drivers" @previous-page="previousPage" @next-page="nextPage" />
+                <PaginationButtons :pagination="drivers" @previous-page="previousPage" @next-page="nextPage" />
             </div>
         </template>
     </Card>

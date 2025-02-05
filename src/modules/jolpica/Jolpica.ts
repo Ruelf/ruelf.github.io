@@ -261,8 +261,24 @@ export class Jolpica {
         return +MRData.total == 0 ? null : new Driver(MRData.DriverTable.Drivers[0]);
     }
 
-    public static async getRacesWithResultsForDriver(driver: Driver, options?: ApiOptions): Promise<Pagination<Race>> {
-        const { MRData } = await this.request(`/drivers/{id}/results`, { id: driver.id }, options);
+    public static async getDriverRaceResults(
+        driver: Driver,
+        filters?: { position?: number },
+        options?: ApiOptions,
+    ): Promise<Pagination<Race>> {
+        let promise;
+
+        if (filters && filters.position) {
+            promise = this.request(
+                '/drivers/{id}/results/{position}',
+                { id: driver.id, position: filters.position },
+                options,
+            );
+        } else {
+            promise = this.request('/drivers/{id}/results', { id: driver.id }, options);
+        }
+
+        const { MRData } = await promise;
 
         return new Pagination(
             MRData,

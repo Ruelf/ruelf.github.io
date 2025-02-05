@@ -28,7 +28,7 @@ export class Driver {
         this.nationality = data.nationality;
     }
 
-    public getRacesWithResults(options?: ApiOptions): Promise<Pagination<Race>> {
-        return Jolpica.getRacesWithResultsForDriver(this, options);
+    public getRaceResults(filters?: { position?: number }, options?: ApiOptions): Promise<Pagination<Race>> {
+        return Jolpica.getDriverRaceResults(this, filters, options);
     }
 }

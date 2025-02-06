@@ -31,4 +31,8 @@ export class Driver {
     public getRaceResults(filters?: { position?: number }, options?: ApiOptions): Promise<Pagination<Race>> {
         return Jolpica.getDriverRaceResults(this, filters, options);
     }
+
+    public get name(): string {
+        return `${this.givenName} ${this.familyName}`;
+    }
 }

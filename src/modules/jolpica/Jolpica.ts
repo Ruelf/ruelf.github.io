@@ -122,10 +122,18 @@ export type Endpoints = {
 
     // Drivers
 
+    '{season}/drivers': {
+        params: {
+            season: Season;
+        };
+        returns: DriverTable;
+    };
+
     '/drivers': {
         params: Record<string, never>;
         returns: DriverTable;
     };
+
     '/drivers/{id}': {
         params: {
             id: string;
@@ -142,8 +150,25 @@ export type Endpoints = {
         returns: RaceTable;
     };
 
+    '{season}/drivers/{id}/results': {
+        params: {
+            season: Season;
+            id: string;
+        };
+        returns: RaceTable;
+    };
+
     '/drivers/{id}/results/{position}': {
         params: {
+            id: string;
+            position: number;
+        };
+        returns: RaceTable;
+    };
+
+    '/{season}/drivers/{id}/results/{position}': {
+        params: {
+            season: Season;
             id: string;
             position: number;
         };
@@ -187,19 +212,20 @@ export class Endpoint<T extends keyof Endpoints> {
     }
 }
 
+// TODO: URL Builder at some point would help
 export class Jolpica {
-    public static async request<T extends keyof Endpoints>(
+    public static async request<T extends keyof Endpoints, R = Endpoints[T]['returns']>(
         path: T,
         params: Endpoints[T]['params'],
         options?: ApiOptions,
-    ): Promise<Response<Endpoints[T]['returns']>> {
+    ): Promise<Response<R>> {
         const endpoint = new Endpoint(path, params);
         const config: AxiosRequestConfig = {
             params: options,
         };
         console.log(endpoint.url);
 
-        const response = await axios.get<Response<Endpoints[T]['returns']>>(endpoint.url, config);
+        const response = await axios.get<Response<R>>(endpoint.url, config);
         return response.data;
     }
 
@@ -249,10 +275,23 @@ export class Jolpica {
         );
     }
 
-    public static async getDrivers(options?: ApiOptions): Promise<Pagination<Driver>> {
-        const { MRData } = await this.request('/drivers', {}, options);
+    public static async getDrivers(filters?: { season?: Season }, options?: ApiOptions): Promise<Pagination<Driver>> {
+        let path: keyof Endpoints = '/drivers';
+        let params = {};
 
-        return this.paginateDrivers(MRData);
+        if (filters) {
+            if (filters.season) {
+                path = ('/{season}' + path) as keyof Endpoints;
+                params = { ...params, season: filters.season };
+            }
+        }
+
+        const { MRData } = await this.request<keyof Endpoints, DriverTable>(path, params, options);
+
+        return new Pagination(
+            MRData,
+            MRData.DriverTable.Drivers.map((driver) => new Driver(driver)),
+        );
     }
 
     public static async getDriver(id: string, options?: ApiOptions): Promise<Driver | null> {
@@ -261,24 +300,27 @@ export class Jolpica {
         return +MRData.total == 0 ? null : new Driver(MRData.DriverTable.Drivers[0]);
     }
 
-    public static async getDriverRaceResults(
+    public static async getDriverRaceResults<T extends keyof Endpoints>(
         driver: Driver,
-        filters?: { position?: number },
+        filters?: { season?: Season; position?: number },
         options?: ApiOptions,
     ): Promise<Pagination<Race>> {
-        let promise;
+        let path: T = '/drivers/{id}/results' as T;
+        let params: Endpoints[T]['params'] = { id: driver.id };
 
-        if (filters && filters.position) {
-            promise = this.request(
-                '/drivers/{id}/results/{position}',
-                { id: driver.id, position: filters.position },
-                options,
-            );
-        } else {
-            promise = this.request('/drivers/{id}/results', { id: driver.id }, options);
+        if (filters) {
+            if (filters.season) {
+                path = ('/{season}' + path) as T;
+                params = { ...params, season: filters.season };
+            }
+
+            if (filters.position) {
+                path = (path + '/{position}') as T;
+                params = { ...params, position: filters.position };
+            }
         }
 
-        const { MRData } = await promise;
+        const { MRData } = await this.request<T, RaceTable>(path, params, options);
 
         return new Pagination(
             MRData,

@@ -26,3 +26,7 @@ export function debounce<A, R>(ms: number): (callback: (...args: A[]) => R) => (
         };
     };
 }
+
+export function range(start: number, stop: number, step: number = 1): number[] {
+    return Array.from({ length: (stop - start) / step }, (_, index) => start + index * step);
+}

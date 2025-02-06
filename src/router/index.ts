@@ -31,6 +31,9 @@ const router = createRouter({
                     path: 'drivers',
                     name: 'drivers',
                     component: DriversView,
+                    props: (route) => ({
+                        season: Number(route.query.season) || undefined,
+                    }),
                 },
                 {
                     path: 'drivers/:id',

@@ -49,7 +49,8 @@ function nextPage(): void {
 <template>
     <template v-if="driver">
         <div class="text-4xl">{{ driver.givenName }} {{ driver.familyName }}</div>
-        <div class="mt-4 grid grid-cols-12 gap-4">
+
+        <div v-if="wonRaces && wonRaces.data.length" class="mt-4 grid grid-cols-12 gap-4">
             <Card class="col-span-6">
                 <Table>
                     <template #head>
@@ -58,7 +59,7 @@ function nextPage(): void {
                         </Tr>
                     </template>
                     <template #body>
-                        <Tr v-for="race of wonRaces?.data" :key="race.name">
+                        <Tr v-for="race of wonRaces.data" :key="race.season.toString() + race.name">
                             <Td>{{ race.season }} {{ race.name }}</Td>
                             <Td>
                                 {{ race.circuit.name }}, {{ race.circuit.location.locality }},
@@ -70,7 +71,7 @@ function nextPage(): void {
 
                 <div class="p-4">
                     <PaginationButtons
-                        v-if="wonRaces"
+                        v-if="wonRaces.totalPages > 1"
                         :pagination="wonRaces"
                         @previous-page="previousPage"
                         @next-page="nextPage"

@@ -41,7 +41,7 @@ function seasonChange(): void {
 function updateUrl(): void {
     const url = new URL(window.location.href);
     url.searchParams.set('season', season.value.toString());
-    window.history.pushState({}, '', url);
+    window.history.replaceState({}, '', url);
 }
 </script>
 

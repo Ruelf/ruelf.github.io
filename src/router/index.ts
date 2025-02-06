@@ -1,5 +1,5 @@
 import DriverShow from '@/views/DriverShow.vue';
-import DriversView from '@/views/DriversView.vue';
+import DriversIndex from '@/views/DriversIndex.vue';
 import HomeView from '@/views/HomeView.vue';
 import PdokView from '@/views/PdokView.vue';
 import SnowflakeView from '@/views/SnowflakeView.vue';
@@ -30,7 +30,7 @@ const router = createRouter({
                 {
                     path: 'drivers',
                     name: 'drivers',
-                    component: DriversView,
+                    component: DriversIndex,
                     props: (route) => ({
                         season: Number(route.query.season) || undefined,
                     }),

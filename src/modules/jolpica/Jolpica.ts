@@ -223,7 +223,6 @@ export class Jolpica {
         const config: AxiosRequestConfig = {
             params: options,
         };
-        console.log(endpoint.url);
 
         const response = await axios.get<Response<R>>(endpoint.url, config);
         return response.data;

@@ -19,8 +19,6 @@ onMounted(async () => {
 
 async function refreshRaces(options?: ApiOptions): Promise<void> {
     if (driver.value) {
-        console.log(driver.value);
-
         wonRaces.value = await driver.value.getRaceResults({ position: 1 }, options);
     }
 }

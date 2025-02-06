@@ -3,7 +3,7 @@ import { ref } from 'vue';
 
 const now = ref<Date>();
 
-function update(): void {
+function update() {
     now.value = new Date();
 }
 

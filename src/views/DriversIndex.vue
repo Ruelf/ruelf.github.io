@@ -28,17 +28,17 @@ onMounted(() => {
     updateUrl();
 });
 
-async function refreshDrivers(): Promise<void> {
+async function refreshDrivers() {
     drivers.value = await Jolpica.getDrivers({ season: season.value }, { limit: 100 });
 }
 
-function seasonChange(): void {
+function seasonChange() {
     season.value = Math.max(minYear, Math.min(maxYear, season.value));
     refreshDrivers();
     updateUrl();
 }
 
-function updateUrl(): void {
+function updateUrl() {
     const url = new URL(window.location.href);
     url.searchParams.set('season', season.value.toString());
     window.history.replaceState({}, '', url);

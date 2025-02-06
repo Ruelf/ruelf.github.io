@@ -17,13 +17,13 @@ onMounted(async () => {
     refreshRaces({ limit: 10 });
 });
 
-async function refreshRaces(options?: ApiOptions): Promise<void> {
+async function refreshRaces(options?: ApiOptions) {
     if (driver.value) {
         wonRaces.value = await driver.value.getRaceResults({ position: 1 }, options);
     }
 }
 
-function previousPage(): void {
+function previousPage() {
     if (!wonRaces.value) {
         return;
     }
@@ -34,7 +34,7 @@ function previousPage(): void {
     });
 }
 
-function nextPage(): void {
+function nextPage() {
     if (!wonRaces.value) {
         return;
     }
@@ -48,7 +48,7 @@ function nextPage(): void {
 
 <template>
     <template v-if="driver">
-        <div class="text-4xl">{{ driver.givenName }} {{ driver.familyName }}</div>
+        <div class="text-4xl">{{ driver.name }}</div>
 
         <div v-if="wonRaces && wonRaces.data.length" class="mt-4 grid grid-cols-12 gap-4">
             <Card class="col-span-6">

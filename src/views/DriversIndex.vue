@@ -2,10 +2,11 @@
 import Card from '@/components/Card.vue';
 import { Table, Td, Th, Tr } from '@/components/table';
 import { range } from '@/helpers/helpers';
-import { type Driver, Jolpica, type Pagination } from '@/modules/jolpica';
+import { Jolpica } from '@/modules/jolpica';
 import dayjs from 'dayjs';
 import { onMounted, ref } from 'vue';
 import InputField from '@/components/InputField.vue';
+import { DriverStanding } from '@/modules/jolpica/DriverStanding';
 
 const props = withDefaults(
     defineProps<{
@@ -16,7 +17,7 @@ const props = withDefaults(
     },
 );
 
-const drivers = ref<Pagination<Driver>>();
+const standings = ref<DriverStanding[]>();
 
 const minYear = 1950;
 const maxYear = dayjs().year();
@@ -29,7 +30,15 @@ onMounted(() => {
 });
 
 async function refreshDrivers() {
-    drivers.value = await Jolpica.getDrivers({ season: season.value }, { limit: 100 });
+    const { MRData } = await Jolpica.request('/{season}/driverstandings', { season: season.value });
+
+    if (MRData.total !== '0') {
+        standings.value = MRData.StandingsTable.StandingsLists[0].DriverStandings.map(
+            (standing) => new DriverStanding(standing),
+        );
+    } else {
+        standings.value = undefined;
+    }
 }
 
 function seasonChange() {
@@ -79,25 +88,35 @@ function updateUrl() {
     </div>
 
     <Card>
-        <template v-if="drivers">
+        <template v-if="standings">
             <Table>
                 <template #head>
                     <Tr>
+                        <Th></Th>
                         <Th>Name</Th>
-                        <Th>DOB</Th>
-                        <Th>Nationality</Th>
+                        <Th>Points</Th>
+                        <Th>Wins</Th>
                     </Tr>
                 </template>
                 <template #body>
-                    <Tr v-for="driver of drivers.data.sort((a, b) => a.name.localeCompare(b.name))" :key="driver.id">
+                    <Tr v-for="standing of standings" :key="standing.Driver.id">
                         <Td>
-                            <RouterLink :to="{ name: 'driverShow', params: { id: driver.id } }" class="underline">
-                                {{ driver.name }}
+                            {{ standing.positionText }}
+                        </Td>
+                        <Td>
+                            <RouterLink
+                                :to="{ name: 'driverShow', params: { id: standing.Driver.id } }"
+                                class="underline"
+                            >
+                                {{ standing.Driver.name }}
                             </RouterLink>
                         </Td>
-
-                        <Td>{{ driver.dateOfBirth.toLocaleDateString() }}</Td>
-                        <Td>{{ driver.nationality }}</Td>
+                        <Td>
+                            {{ standing.points }}
+                        </Td>
+                        <Td>
+                            {{ standing.wins }}
+                        </Td>
                     </Tr>
                 </template>
             </Table>

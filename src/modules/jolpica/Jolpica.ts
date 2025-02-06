@@ -6,6 +6,7 @@ import { Circuit, type CircuitApiData } from './Circuit';
 import { Driver, type DriverApiData } from './Driver';
 import { Pagination } from './Pagination';
 import { Race, type RaceApiData } from './Race';
+import type { DriverStandingApiData } from './DriverStanding';
 
 export interface ApiOptions {
     limit?: number;
@@ -14,6 +15,7 @@ export interface ApiOptions {
 
 export type Round = number | 'last' | 'next';
 export type Season = number | 'current';
+export type StandingPositionText = string | 'E' | 'D' | '-';
 export type Status =
     | 'Finished'
     | 'Disqualified'
@@ -61,6 +63,18 @@ export interface DriverTable {
 export interface RaceTable {
     RaceTable: {
         Races: RaceApiData[];
+    };
+}
+
+export interface DriverStandingsTable {
+    StandingsTable: {
+        season: string;
+        round: string;
+        StandingsLists: {
+            season: string;
+            round: string;
+            DriverStandings: DriverStandingApiData[];
+        }[];
     };
 }
 
@@ -183,6 +197,15 @@ export type Endpoints = {
             round: Round;
         };
         returns: RaceTable;
+    };
+
+    // DriverStandings
+
+    '/{season}/driverstandings': {
+        params: {
+            season: Season;
+        };
+        returns: DriverStandingsTable;
     };
 };
 

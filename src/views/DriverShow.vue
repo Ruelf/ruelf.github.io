@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import Card from '@/components/Card.vue';
+import Link from '@/components/Link.vue';
+import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import PaginationButtons from '@/components/PaginationButtons.vue';
 import { Table, Td, Th, Tr } from '@/components/table';
 import { Driver, Jolpica, type ApiOptions, type Pagination, type Race } from '@/modules/jolpica';
@@ -48,22 +50,27 @@ function nextPage() {
 
 <template>
     <template v-if="driver">
-        <div class="text-4xl">{{ driver.name }}</div>
+        <div class="px-2 text-4xl sm:px-0">{{ driver.name }}</div>
 
         <div v-if="wonRaces && wonRaces.data.length" class="mt-4 grid grid-cols-12 gap-4">
-            <Card class="col-span-6">
+            <Card class="col-span-12 sm:col-span-6">
                 <Table>
                     <template #head>
                         <Tr>
                             <Th>Race</Th>
+                            <Th>Circuit</Th>
                         </Tr>
                     </template>
                     <template #body>
                         <Tr v-for="race of wonRaces.data" :key="race.season.toString() + race.name">
-                            <Td>{{ race.season }} {{ race.name }}</Td>
                             <Td>
-                                {{ race.circuit.name }}, {{ race.circuit.location.locality }},
-                                {{ race.circuit.location.country }}
+                                <Link :href="race.url" target="_blank"> {{ race.season }} {{ race.name }} </Link>
+                            </Td>
+                            <Td>
+                                <Link :href="race.circuit.url" target="_blank">{{ race.circuit.name }}</Link>
+                                <div class="text-xs dark:text-gray-400">
+                                    {{ race.circuit.location.locality }}, {{ race.circuit.location.country }}
+                                </div>
                             </Td>
                         </Tr>
                     </template>
@@ -79,5 +86,14 @@ function nextPage() {
                 </div>
             </Card>
         </div>
+        <div v-else-if="!wonRaces">
+            <LoadingSpinner class="mt-4 text-4xl" />
+        </div>
+    </template>
+    <template v-else-if="driver === null">
+        <div class="text-4xl">Driver not found</div>
+    </template>
+    <template v-else>
+        <LoadingSpinner class="text-4xl" />
     </template>
 </template>

@@ -55,7 +55,7 @@ function updateUrl() {
 </script>
 
 <template>
-    <div class="mb-4 flex gap-4">
+    <div class="mb-4 flex gap-4 px-2 sm:px-0">
         <label for="season">Season</label>
 
         <InputField
@@ -68,15 +68,21 @@ function updateUrl() {
             @change="seasonChange"
         />
 
-        <input
-            v-model="season"
-            type="range"
-            :min="minYear"
-            :max="maxYear"
-            list="season-markers"
-            class="w-full"
-            @change="seasonChange"
-        />
+        <div class="flex w-full gap-2">
+            <div>{{ minYear }}</div>
+
+            <input
+                v-model="season"
+                type="range"
+                :min="minYear"
+                :max="maxYear"
+                list="season-markers"
+                class="w-full"
+                @change="seasonChange"
+            />
+
+            <div>{{ maxYear }}</div>
+        </div>
 
         <datalist id="season-markers">
             <option
@@ -94,6 +100,7 @@ function updateUrl() {
                     <Tr>
                         <Th></Th>
                         <Th>Name</Th>
+                        <Th>Constructor</Th>
                         <Th>Points</Th>
                         <Th>Wins</Th>
                     </Tr>
@@ -110,6 +117,9 @@ function updateUrl() {
                             >
                                 {{ standing.Driver.name }}
                             </RouterLink>
+                        </Td>
+                        <Td>
+                            {{ standing.Constructors.map((constructor) => constructor.name).join(', ') }}
                         </Td>
                         <Td>
                             {{ standing.points }}

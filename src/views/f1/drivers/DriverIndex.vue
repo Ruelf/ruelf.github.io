@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Card from '@/components/Card.vue';
 import { Table, Td, Th, Tr } from '@/components/table';
-import { range } from '@/helpers/helpers';
+import { range } from '@/helpers';
 import { Jolpica } from '@/modules/jolpica';
 import dayjs from 'dayjs';
 import { onMounted, ref } from 'vue';

@@ -189,6 +189,21 @@ export type Endpoints = {
         returns: RaceTable;
     };
 
+    '/{season}/results': {
+        params: {
+            season: Season;
+        };
+        returns: RaceTable;
+    };
+
+    '/{season}/results/{position}': {
+        params: {
+            season: Season;
+            position: number;
+        };
+        returns: RaceTable;
+    };
+
     // Races
 
     '/{season}/{round}': {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Card from '@/components/Card.vue';
-import { groupBy, range } from '@/helpers/helpers';
+import { range } from '@/helpers';
 import dayjs from 'dayjs';
 
 const allSeasons = range(1950, dayjs().year() + 1);
@@ -10,17 +10,20 @@ const allSeasons = range(1950, dayjs().year() + 1);
     <Card class="p-4">
         <div class="flex flex-wrap gap-16">
             <div
-                v-for="[key, seasons] of groupBy(allSeasons, (season) => season - (season % 10))"
+                v-for="[key, seasons] of allSeasons.groupBy((season) => season - (season % 10))"
                 :key="key"
                 class="w-16"
             >
                 <div class="w-full border-b-2 border-gray-500 text-xl">
                     {{ key }}
                 </div>
-                <div v-for="season of seasons" :key="season">
-                    <RouterLink :to="{ name: 'seasonHome', params: { season } }" class="underline">
-                        {{ season }}
-                    </RouterLink>
+
+                <div class="flex flex-col gap-1">
+                    <div v-for="season of seasons" :key="season">
+                        <RouterLink :to="{ name: 'seasonHome', params: { season } }" class="underline">
+                            {{ season }}
+                        </RouterLink>
+                    </div>
                 </div>
             </div>
         </div>

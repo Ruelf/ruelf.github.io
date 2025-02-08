@@ -7,6 +7,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import SeasonIndex from '@/views/f1/seasons/SeasonIndex.vue';
 import SeasonShow from '@/views/f1/seasons/SeasonShow.vue';
 import SeasonHome from '@/views/f1/seasons/SeasonHome.vue';
+import SeasonDrivers from '@/views/f1/seasons/SeasonDrivers.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,6 +52,14 @@ const router = createRouter({
                                         season: Number(route.params.season) || undefined,
                                     }),
                                     component: SeasonHome,
+                                },
+                                {
+                                    path: 'drivers',
+                                    name: 'seasonDrivers',
+                                    props: (route) => ({
+                                        season: Number(route.params.season) || undefined,
+                                    }),
+                                    component: SeasonDrivers,
                                 },
                             ],
                         },

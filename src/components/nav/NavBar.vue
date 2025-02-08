@@ -12,19 +12,16 @@ const navItems: NavItem[] = [
     {
         title: 'Formula 1',
         route: 'f1',
-        children: [{ title: 'Drivers', route: 'drivers' }],
+        children: [
+            { title: 'Seasons', route: 'seasonIndex' },
+            { title: 'Drivers', route: 'drivers' },
+        ],
     },
     {
         title: 'Other',
         children: [
-            {
-                title: 'Snowflake',
-                route: 'snowflake',
-            },
-            {
-                title: 'Pdok',
-                route: 'pdok',
-            },
+            { title: 'Snowflake', route: 'snowflake' },
+            { title: 'Pdok', route: 'pdok' },
         ],
     },
 ];
@@ -34,7 +31,7 @@ const navItems: NavItem[] = [
     <nav class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
         <div class="mx-auto max-w-7xl p-4">
             <div class="flex items-center gap-4">
-                <RouterLink :to="{ name: 'home' }" class="group">
+                <RouterLink :to="{ name: 'home' }" class="group rounded-full">
                     <img
                         src="@/assets/avatar.jpeg"
                         class="size-10 rounded-full shadow-md group-hover:ring-1 group-hover:brightness-125"

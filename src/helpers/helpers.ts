@@ -30,3 +30,17 @@ export function debounce<A, R>(ms: number): (callback: (...args: A[]) => R) => (
 export function range(start: number, stop: number, step: number = 1): number[] {
     return Array.from({ length: (stop - start) / step }, (_, index) => start + index * step);
 }
+
+export function groupBy<T, K>(array: T[], callback: (item: T) => K): Map<K, T[]> {
+    return array.reduce<Map<K, T[]>>((previous, current) => {
+        const key = callback(current);
+
+        if (!previous.has(key)) {
+            previous.set(key, []);
+        }
+
+        previous.get(key)?.push(current);
+
+        return previous;
+    }, new Map());
+}

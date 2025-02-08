@@ -15,12 +15,12 @@ export class Collection<T> extends Array<T> {
         return collect(this.map((item) => item[key]));
     }
 
-    public groupBy<K>(callback: (item: T) => K): Map<K, T[]> {
-        return this.reduce<Map<K, T[]>>((previous, current) => {
+    public groupBy<K>(callback: (item: T) => K): Map<K, Collection<T>> {
+        return this.reduce<Map<K, Collection<T>>>((previous, current) => {
             const key = callback(current);
 
             if (!previous.has(key)) {
-                previous.set(key, []);
+                previous.set(key, collect());
             }
 
             previous.get(key)?.push(current);
@@ -34,7 +34,7 @@ export class Collection<T> extends Array<T> {
     }
 }
 
-export function collect<T>(data: T[]): Collection<T> {
+export function collect<T>(data: T[] = []): Collection<T> {
     return Collection.make(data);
 }
 

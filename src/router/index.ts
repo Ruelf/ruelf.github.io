@@ -25,21 +25,25 @@ const router = createRouter({
         },
         {
             path: '/f1',
-            name: 'f1',
             children: [
                 {
                     path: 'drivers',
-                    name: 'drivers',
-                    component: DriversIndex,
-                    props: (route) => ({
-                        season: Number(route.query.season) || undefined,
-                    }),
-                },
-                {
-                    path: 'drivers/:id',
-                    name: 'driverShow',
-                    component: DriverShow,
-                    props: true,
+                    children: [
+                        {
+                            path: '',
+                            name: 'drivers',
+                            component: DriversIndex,
+                            props: (route) => ({
+                                season: Number(route.query.season) || undefined,
+                            }),
+                        },
+                        {
+                            path: ':id',
+                            name: 'driverShow',
+                            component: DriverShow,
+                            props: true,
+                        },
+                    ],
                 },
             ],
         },

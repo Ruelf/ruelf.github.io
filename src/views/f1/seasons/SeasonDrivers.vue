@@ -29,42 +29,37 @@ onMounted(async () => {
 
 <template>
     <Card>
-        <template v-if="standings">
-            <Table>
-                <template #head>
-                    <Tr>
-                        <Th></Th>
-                        <Th>Name</Th>
-                        <Th>Constructor</Th>
-                        <Th>Points</Th>
-                        <Th>Wins</Th>
-                    </Tr>
-                </template>
-                <template #body>
-                    <Tr v-for="standing of standings" :key="standing.Driver.id">
-                        <Td>
-                            {{ standing.positionText }}
-                        </Td>
-                        <Td>
-                            <RouterLink
-                                :to="{ name: 'driverShow', params: { id: standing.Driver.id } }"
-                                class="underline"
-                            >
-                                {{ standing.Driver.name }}
-                            </RouterLink>
-                        </Td>
-                        <Td>
-                            {{ standing.Constructors.map((constructor) => constructor.name).join(', ') }}
-                        </Td>
-                        <Td>
-                            {{ standing.points }}
-                        </Td>
-                        <Td>
-                            {{ standing.wins }}
-                        </Td>
-                    </Tr>
-                </template>
-            </Table>
-        </template>
+        <Table>
+            <template #head>
+                <Tr>
+                    <Th></Th>
+                    <Th>Name</Th>
+                    <Th>Constructor</Th>
+                    <Th>Points</Th>
+                    <Th>Wins</Th>
+                </Tr>
+            </template>
+            <template #body>
+                <Tr v-for="standing of standings" :key="standing.Driver.id">
+                    <Td>
+                        {{ standing.positionText }}
+                    </Td>
+                    <Td>
+                        <RouterLink :to="{ name: 'driverShow', params: { id: standing.Driver.id } }" class="underline">
+                            {{ standing.Driver.name }}
+                        </RouterLink>
+                    </Td>
+                    <Td>
+                        {{ standing.Constructors.map((constructor) => constructor.name).join(', ') }}
+                    </Td>
+                    <Td>
+                        {{ standing.points }}
+                    </Td>
+                    <Td>
+                        {{ standing.wins }}
+                    </Td>
+                </Tr>
+            </template>
+        </Table>
     </Card>
 </template>

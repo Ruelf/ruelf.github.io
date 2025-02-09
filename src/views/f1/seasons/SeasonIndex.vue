@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Card from '@/components/Card.vue';
-import { range } from '@/helpers';
+import { range } from '@/utils';
 import dayjs from 'dayjs';
 
 const allSeasons = range(1950, dayjs().year() + 1);

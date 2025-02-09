@@ -3,24 +3,24 @@ import Card from '@/components/Card.vue';
 import { Table, Td, Th, Tr } from '@/components/table';
 import { range } from '@/utils';
 import { Jolpica } from '@/modules/jolpica';
-import dayjs from 'dayjs';
 import { onMounted, ref } from 'vue';
 import InputField from '@/components/InputField.vue';
 import { DriverStanding } from '@/modules/jolpica/DriverStanding';
+import config from '@/config';
 
 const props = withDefaults(
     defineProps<{
         season?: number;
     }>(),
     {
-        season: dayjs().year(),
+        season: config.f1.seasons.max,
     },
 );
 
 const standings = ref<DriverStanding[]>();
 
-const minYear = 1950;
-const maxYear = dayjs().year();
+const minYear = config.f1.seasons.min;
+const maxYear = config.f1.seasons.max;
 
 const season = ref(Math.max(minYear, Math.min(maxYear, props.season)));
 

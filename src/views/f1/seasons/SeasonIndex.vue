@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import Card from '@/components/Card.vue';
+import config from '@/config';
 import { range } from '@/utils';
-import dayjs from 'dayjs';
 
-const allSeasons = range(1950, dayjs().year() + 1);
+const allSeasons = range(config.f1.seasons.min, config.f1.seasons.max + 1);
 </script>
 
 <template>

@@ -5,7 +5,7 @@ import Td from '@/components/table/Td.vue';
 import Th from '@/components/table/Th.vue';
 import Tr from '@/components/table/Tr.vue';
 import { Jolpica, Race } from '@/modules/jolpica';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, on, watch } from 'vue';
 
 const props = defineProps<{
     season: number;
@@ -13,10 +13,21 @@ const props = defineProps<{
 
 const races = ref<Race[]>();
 
-onMounted(async () => {
+watch(
+    () => props.season,
+    () => {
+        refreshData();
+    },
+);
+
+onMounted(() => {
+    refreshData();
+});
+
+async function refreshData() {
     const { MRData } = await Jolpica.request('/{season}/results/{position}', { season: props.season, position: 1 });
     races.value = MRData.RaceTable.Races.map((race) => new Race(race));
-});
+}
 </script>
 
 <template>

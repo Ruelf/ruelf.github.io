@@ -6,7 +6,7 @@ import Th from '@/components/table/Th.vue';
 import Tr from '@/components/table/Tr.vue';
 import { Jolpica } from '@/modules/jolpica';
 import { DriverStanding } from '@/modules/jolpica/DriverStanding';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 const props = defineProps<{
     season: number;
@@ -14,7 +14,18 @@ const props = defineProps<{
 
 const standings = ref<DriverStanding[]>();
 
-onMounted(async () => {
+watch(
+    () => props.season,
+    () => {
+        refreshData();
+    },
+);
+
+onMounted(() => {
+    refreshData();
+});
+
+async function refreshData() {
     const { MRData } = await Jolpica.request('/{season}/driverstandings', { season: props.season });
 
     if (MRData.total !== '0') {
@@ -24,7 +35,7 @@ onMounted(async () => {
     } else {
         standings.value = undefined;
     }
-});
+}
 </script>
 
 <template>

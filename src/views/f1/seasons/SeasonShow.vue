@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import PrimaryButton from '@/components/PrimaryButton.vue';
+import config from '@/config';
 import router from '@/router';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { Tab, TabGroup, TabList } from '@headlessui/vue';
 
 const props = defineProps<{
-    season?: number;
+    season: number;
 }>();
 
 const tabs = [
@@ -14,12 +17,30 @@ const tabs = [
 function changeTab(index: number) {
     router.push({ name: tabs[index].route, params: { season: props.season } });
 }
+
+function previousSeason() {
+    router.push({ name: router.currentRoute.value.name, params: { season: props.season - 1 } });
+}
+
+function nextSeason() {
+    router.push({ name: router.currentRoute.value.name, params: { season: props.season + 1 } });
+}
 </script>
 
 <template>
-    <div class="px-2 sm:px-0">
-        <div class="mb-4 text-4xl">
-            {{ season }}
+    <div class="flex flex-col gap-4 px-2 sm:px-0">
+        <div class="flex items-center gap-4">
+            <PrimaryButton :disabled="season <= config.f1.seasons.min" @click="previousSeason">
+                <FontAwesomeIcon :icon="['fas', 'chevron-left']" />
+            </PrimaryButton>
+
+            <div class="text-4xl">
+                {{ season }}
+            </div>
+
+            <PrimaryButton :disabled="season >= config.f1.seasons.max" @click="nextSeason">
+                <FontAwesomeIcon :icon="['fas', 'chevron-right']" />
+            </PrimaryButton>
         </div>
 
         <TabGroup

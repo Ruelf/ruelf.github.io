@@ -5,7 +5,7 @@ import Td from '@/components/table/Td.vue';
 import Th from '@/components/table/Th.vue';
 import Tr from '@/components/table/Tr.vue';
 import { Jolpica, Race } from '@/modules/jolpica';
-import { onMounted, ref, on, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 const props = defineProps<{
     season: number;

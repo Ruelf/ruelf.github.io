@@ -22,8 +22,8 @@ export class Race {
     results?: Result[];
 
     public constructor(data: RaceApiData) {
-        this.season = +data.season;
-        this.round = +data.round;
+        this.season = Number(data.season);
+        this.round = Number(data.round);
         this.url = data.url;
         this.name = data.raceName;
         this.circuit = new Circuit(data.Circuit);

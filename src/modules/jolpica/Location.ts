@@ -12,8 +12,8 @@ export class Location {
     country: string;
 
     public constructor(data: LocationApiData) {
-        this.lat = +data.lat;
-        this.long = +data.long;
+        this.lat = Number(data.lat);
+        this.long = Number(data.long);
         this.locality = data.locality;
         this.country = data.country;
     }

@@ -14,7 +14,7 @@ export interface ApiOptions {
 }
 
 export type Round = number | 'last' | 'next';
-export type Season = number | 'current';
+export type SeasonParam = number | 'current';
 export type StandingPositionText = string | 'E' | 'D' | '-';
 export type Status =
     | 'Finished'
@@ -78,6 +78,10 @@ export interface DriverStandingsTable {
     };
 }
 
+export interface SeasonTable {
+    Seasons: SeasonParam;
+}
+
 export type Endpoints = {
     // Circuits
     '/circuits': {
@@ -86,13 +90,13 @@ export type Endpoints = {
     };
     '/{season}/circuits': {
         params: {
-            season: Season;
+            season: SeasonParam;
         };
         returns: CircuitTable;
     };
     '/{season}/{round}/circuits': {
         params: {
-            season: Season;
+            season: SeasonParam;
             round: Round;
         };
         returns: CircuitTable;
@@ -138,7 +142,7 @@ export type Endpoints = {
 
     '{season}/drivers': {
         params: {
-            season: Season;
+            season: SeasonParam;
         };
         returns: DriverTable;
     };
@@ -166,7 +170,7 @@ export type Endpoints = {
 
     '{season}/drivers/{id}/results': {
         params: {
-            season: Season;
+            season: SeasonParam;
             id: string;
         };
         returns: RaceTable;
@@ -182,7 +186,7 @@ export type Endpoints = {
 
     '/{season}/drivers/{id}/results/{position}': {
         params: {
-            season: Season;
+            season: SeasonParam;
             id: string;
             position: number;
         };
@@ -191,14 +195,14 @@ export type Endpoints = {
 
     '/{season}/results': {
         params: {
-            season: Season;
+            season: SeasonParam;
         };
         returns: RaceTable;
     };
 
     '/{season}/results/{position}': {
         params: {
-            season: Season;
+            season: SeasonParam;
             position: number;
         };
         returns: RaceTable;
@@ -208,7 +212,7 @@ export type Endpoints = {
 
     '/{season}/{round}': {
         params: {
-            season: Season;
+            season: SeasonParam;
             round: Round;
         };
         returns: RaceTable;
@@ -218,7 +222,7 @@ export type Endpoints = {
 
     '/{season}/driverstandings': {
         params: {
-            season: Season;
+            season: SeasonParam;
         };
         returns: DriverStandingsTable;
     };
@@ -281,14 +285,14 @@ export class Jolpica {
         return this.paginateCircuits(MRData);
     }
 
-    public static async getSeasonCircuits(season: Season, options?: ApiOptions): Promise<Pagination<Circuit>> {
+    public static async getSeasonCircuits(season: SeasonParam, options?: ApiOptions): Promise<Pagination<Circuit>> {
         const { MRData } = await this.request('/{season}/circuits', { season }, options);
 
         return this.paginateCircuits(MRData);
     }
 
     public static async getSeasonRoundCircuit(
-        season: Season,
+        season: SeasonParam,
         round: Round,
         options?: ApiOptions,
     ): Promise<Circuit | null> {
@@ -312,7 +316,10 @@ export class Jolpica {
         );
     }
 
-    public static async getDrivers(filters?: { season?: Season }, options?: ApiOptions): Promise<Pagination<Driver>> {
+    public static async getDrivers(
+        filters?: { season?: SeasonParam },
+        options?: ApiOptions,
+    ): Promise<Pagination<Driver>> {
         let path: keyof Endpoints = '/drivers';
         let params = {};
 
@@ -339,7 +346,7 @@ export class Jolpica {
 
     public static async getDriverRaceResults<T extends keyof Endpoints>(
         driver: Driver,
-        filters?: { season?: Season; position?: number },
+        filters?: { season?: SeasonParam; position?: number },
         options?: ApiOptions,
     ): Promise<Pagination<Race>> {
         let path: T = '/drivers/{id}/results' as T;
@@ -367,7 +374,7 @@ export class Jolpica {
 
     // Races
 
-    public static async getSeasonRound(season: Season, round: Round, options?: ApiOptions): Promise<Race | null> {
+    public static async getSeasonRound(season: SeasonParam, round: Round, options?: ApiOptions): Promise<Race | null> {
         const { MRData } = await this.request('/{season}/{round}', { season, round }, options);
 
         return +MRData.total == 0 ? null : new Race(MRData.RaceTable.Races[0]);

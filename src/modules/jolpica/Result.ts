@@ -31,14 +31,14 @@ export class Result {
     Race: Race;
 
     public constructor(data: ResultApiData, race: Race) {
-        this.number = +data.number;
-        this.position = +data.position;
+        this.number = Number(data.number);
+        this.position = Number(data.position);
         this.positionText = data.positionText;
         this.points = data.points;
         this.Driver = new Driver(data.Driver);
         this.Constructor = new Constructor(data.Constructor);
-        this.grid = +data.grid;
-        this.laps = +data.laps;
+        this.grid = Number(data.grid);
+        this.laps = Number(data.laps);
         this.status = data.status;
         this.Race = race;
 

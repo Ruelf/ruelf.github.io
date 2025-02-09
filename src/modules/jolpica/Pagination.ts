@@ -7,9 +7,9 @@ export class Pagination<TData = unknown> {
     data: TData[];
 
     public constructor(MRData: MRData, data: TData[]) {
-        this.limit = +MRData.limit;
-        this.offset = +MRData.offset;
-        this.total = +MRData.total;
+        this.limit = Number(MRData.limit);
+        this.offset = Number(MRData.offset);
+        this.total = Number(MRData.total);
 
         this.data = data;
     }

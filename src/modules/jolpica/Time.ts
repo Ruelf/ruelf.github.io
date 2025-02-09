@@ -8,7 +8,7 @@ export class Time {
     time: string;
 
     public constructor(data: TimeApiData) {
-        this.millis = +data.millis;
+        this.millis = Number(data.millis);
         this.time = data.time;
     }
 }

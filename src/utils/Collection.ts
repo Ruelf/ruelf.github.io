@@ -3,6 +3,20 @@ export class Collection<T> extends Array<T> {
         return new Collection(...data);
     }
 
+    public insertAt(index: number, item: T): void {
+        this.splice(index, 0, item);
+    }
+
+    public removeAt(index: number): T | undefined {
+        const deleted = this.splice(index, 1);
+
+        return deleted.length ? deleted[0] : undefined;
+    }
+
+    public remove(item: T): void {
+        this.removeAt(this.indexOf(item));
+    }
+
     public where<K extends keyof T>(key: K, value: T[K]): Collection<T> {
         return collect(this.filter((item) => item[key] === value));
     }

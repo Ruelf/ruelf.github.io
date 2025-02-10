@@ -22,6 +22,7 @@ const navItems: NavItem[] = [
         children: [
             { title: 'Snowflake', route: 'snowflake' },
             { title: 'Pdok', route: 'pdok' },
+            { title: 'Dogs', route: 'dogs' },
         ],
     },
 ];

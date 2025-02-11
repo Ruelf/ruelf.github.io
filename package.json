@@ -11,7 +11,7 @@
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
-    "predeploy": "npm run build && py scripts/fix_404.py",
+    "predeploy": "npm run build && py scripts/predeploy.py",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {

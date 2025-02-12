@@ -2,7 +2,16 @@ import type { FilterByType } from '@/types/utility';
 import { collect, type Collection } from '@/utils';
 import axios from 'axios';
 
-type Params<T> = Partial<FilterByType<T, string | number | boolean>>;
+type AllowedParams<T> = Partial<FilterByType<T, string | number | boolean>>;
+
+// type Params<T> = Record<
+//     keyof AllowedParams<T>,
+//     AllowedParams<T>[keyof AllowedParams<T>] | ['>' | '<', AllowedParams<T>[keyof AllowedParams<T>]]
+// >;
+
+type ApiParams<T> = {
+    [K in keyof AllowedParams<T> as `${Extract<K, string>}>` | `${Extract<K, string>}<` | K]: T[K];
+};
 
 export interface CarData {
     brake: number;
@@ -69,7 +78,7 @@ export interface Session {
 }
 
 export class OpenF1 {
-    private static async request<T>(path: string, params?: Params<T>): Promise<Collection<T>> {
+    private static async request<T>(path: string, params?: ApiParams<T>): Promise<Collection<T>> {
         const response = await axios.request<T[]>({
             method: 'GET',
             baseURL: 'https://api.openf1.org/v1/',
@@ -82,19 +91,19 @@ export class OpenF1 {
         return collect(response.data);
     }
 
-    public static carData(params?: Params<CarData>): Promise<Collection<CarData>> {
+    public static carData(params?: ApiParams<CarData>): Promise<Collection<CarData>> {
         return this.request<CarData>('/car_data', params);
     }
 
-    public static laps(params?: Params<Lap>): Promise<Collection<Lap>> {
+    public static laps(params?: ApiParams<Lap>): Promise<Collection<Lap>> {
         return this.request<Lap>('/laps', params);
     }
 
-    public static meetings(params?: Params<Meeting>): Promise<Collection<Meeting>> {
+    public static meetings(params?: ApiParams<Meeting>): Promise<Collection<Meeting>> {
         return this.request<Meeting>('/meetings', params);
     }
 
-    public static sessions(params?: Params<Session>): Promise<Collection<Session>> {
+    public static sessions(params?: ApiParams<Session>): Promise<Collection<Session>> {
         return this.request<Session>('/sessions', params);
     }
 }

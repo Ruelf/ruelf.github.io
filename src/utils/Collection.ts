@@ -1,12 +1,4 @@
 export class Collection<T> extends Array<T> {
-    public constructor(items: Iterable<T>) {
-        super(...items);
-    }
-
-    public static make<T>(data: Iterable<T>): Collection<T> {
-        return new this(data);
-    }
-
     public insertAt(index: number, item: T): void {
         this.splice(index, 0, item);
     }
@@ -53,7 +45,7 @@ export class Collection<T> extends Array<T> {
 }
 
 export function collect<T>(data: Iterable<T> = []): Collection<T> {
-    return Collection.make(data);
+    return new Collection(...data);
 }
 
 export function range(start: number, stop: number, step: number = 1): Collection<number> {

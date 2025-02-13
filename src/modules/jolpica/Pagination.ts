@@ -1,17 +1,18 @@
 import type { MRData } from '@/types/jolpica';
+import { collect, type Collection } from '@/utils';
 
-export class Pagination<TData = unknown> {
+export class Pagination<T = unknown> {
     limit: number;
     offset: number;
     total: number;
-    data: TData[];
+    data: Collection<T>;
 
-    public constructor(MRData: MRData, data: TData[]) {
+    public constructor(MRData: MRData, data: Iterable<T>) {
         this.limit = Number(MRData.limit);
         this.offset = Number(MRData.offset);
         this.total = Number(MRData.total);
 
-        this.data = data;
+        this.data = collect(data);
     }
 
     public get currentPage(): number {

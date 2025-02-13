@@ -30,15 +30,7 @@ onMounted(() => {
 });
 
 async function refreshDrivers() {
-    const { MRData } = await Jolpica.request('/{season}/driverstandings', { season: season.value });
-
-    if (MRData.total !== '0') {
-        standings.value = MRData.StandingsTable.StandingsLists[0].DriverStandings.map(
-            (standing) => new DriverStanding(standing),
-        );
-    } else {
-        standings.value = undefined;
-    }
+    standings.value = await Jolpica.getSeasonDriverStandings(props.season);
 }
 
 function seasonChange() {

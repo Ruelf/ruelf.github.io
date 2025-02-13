@@ -6,7 +6,8 @@ import { Circuit, type CircuitApiData } from './Circuit';
 import { Driver, type DriverApiData } from './Driver';
 import { Pagination } from './Pagination';
 import { Race, type RaceApiData } from './Race';
-import type { DriverStandingApiData } from './DriverStanding';
+import { DriverStanding, type DriverStandingApiData } from './DriverStanding';
+import { collect, type Collection } from '@/utils';
 
 export interface ApiOptions {
     limit?: number;
@@ -378,5 +379,20 @@ export class Jolpica {
         const { MRData } = await this.request('/{season}/{round}', { season, round }, options);
 
         return +MRData.total == 0 ? null : new Race(MRData.RaceTable.Races[0]);
+    }
+
+    // Seasons
+
+    public static async getSeasonDriverStandings(
+        season: SeasonParam,
+        options?: ApiOptions,
+    ): Promise<Collection<DriverStanding>> {
+        const { MRData } = await this.request('/{season}/driverstandings', { season }, { limit: 50, ...options });
+
+        return collect(
+            MRData.StandingsTable.StandingsLists[0]?.DriverStandings.map(
+                (driverStanding) => new DriverStanding(driverStanding),
+            ),
+        );
     }
 }

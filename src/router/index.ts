@@ -9,6 +9,8 @@ import SeasonShow from '@/views/f1/seasons/SeasonShow.vue';
 import SeasonHome from '@/views/f1/seasons/SeasonHome.vue';
 import SeasonDrivers from '@/views/f1/seasons/SeasonDrivers.vue';
 import DogsView from '@/views/DogsView.vue';
+import JokeView from '@/views/JokeView.vue';
+import JokeInfo from '@/views/JokeInfo.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,18 +37,13 @@ const router = createRouter({
         },
         {
             path: '/joke',
-            children: [
-                {
-                    path: '',
-                    name: 'joke',
-                    component: import('@/views/JokeView.vue'),
-                },
-                {
-                    path: 'info',
-                    name: 'jokeInfo',
-                    component: import('@/views/JokeInfo.vue'),
-                },
-            ],
+            name: 'joke',
+            component: JokeView,
+        },
+        {
+            path: '/joke/info',
+            name: 'jokeInfo',
+            component: JokeInfo,
         },
         {
             path: '/f1',

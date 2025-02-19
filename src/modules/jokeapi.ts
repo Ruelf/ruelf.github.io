@@ -110,8 +110,8 @@ export default class JokeApi {
         return data;
     }
 
-    public static joke(options: JokeOptions & { jokeType: 'single' }): Promise<SingleTypeJoke>;
-    public static joke(options: JokeOptions & { jokeType: 'twopart' }): Promise<TwopartTypeJoke>;
+    public static joke(options: JokeOptions & { jokeType: 'single'; amount?: 1 }): Promise<SingleTypeJoke>;
+    public static joke(options: JokeOptions & { jokeType: 'twopart'; amount?: 1 }): Promise<TwopartTypeJoke>;
     public static joke(options?: JokeOptions & { amount?: 1 }): Promise<SingleTypeJoke | TwopartTypeJoke>;
 
     // TODO

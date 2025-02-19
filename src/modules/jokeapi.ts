@@ -71,10 +71,10 @@ export class JokeApiError extends Error {
     //     this.code = code;
     // }
 }
-
 export type InfoResponse = SuccessResponse & {
     version: string;
     jokes: {
+        totalCount: number;
         categories: JokeCategory[];
         flags: JokeBlacklistFlag[];
         types: JokeType[];
@@ -92,11 +92,26 @@ export type InfoResponse = SuccessResponse & {
     timestam: number;
 };
 
+/**
+ * A class to interact with the JokeAPI.
+ * Provides methods to fetch jokes and information about the JokeAPI.
+ *
+ * @example
+ * // Fetch a single joke
+ * const joke = await JokeApi.joke({ jokeType: 'single' });
+ * console.log(joke);
+ *
+ * @example
+ * // Fetch information about the JokeAPI
+ * const info = await JokeApi.info();
+ * console.log(info);
+ */
 export default class JokeApi {
     private static readonly baseUrl: string = 'https://v2.jokeapi.dev';
 
     private static async request(path: '/info', params?: never): Promise<InfoResponse>;
     private static async request(path: `/joke/${string}`, params?: Record<string, unknown>): Promise<JokeResponse>;
+
     private static async request<T extends SuccessResponse>(
         path: string,
         params?: Record<string, unknown>,
@@ -134,6 +149,19 @@ export default class JokeApi {
         });
     }
 
+    /**
+     * This endpoint provides a lot of information about JokeAPI and its jokes:
+     * - The version number
+     * - The amount of jokes
+     * - All the available categories, flags, types and formats
+     * - A 13-character UNIX timestamp
+     * - The URL to a joke submission form
+     * - A list of languages (code and name) JokeAPI currently supports
+     * - The minimum and maximum values of an ID range per each language
+     * - The amount of safe jokes there are per language
+     * - A string with some information, like a message of the day
+     * @returns {Promise<InfoResponse>} The response object
+     */
     public static info(): Promise<InfoResponse> {
         return this.request('/info');
     }

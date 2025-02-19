@@ -35,8 +35,18 @@ const router = createRouter({
         },
         {
             path: '/joke',
-            name: 'joke',
-            component: () => import('@/views/JokeView.vue'),
+            children: [
+                {
+                    path: '',
+                    name: 'joke',
+                    component: import('@/views/JokeView.vue'),
+                },
+                {
+                    path: 'info',
+                    name: 'jokeInfo',
+                    component: import('@/views/JokeInfo.vue'),
+                },
+            ],
         },
         {
             path: '/f1',

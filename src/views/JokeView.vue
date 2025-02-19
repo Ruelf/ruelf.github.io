@@ -17,7 +17,7 @@ function getJoke() {
     return JokeApi.joke({
         language: JokeLanguage.English,
         safeMode: true,
-        blacklistFlags: ['political'],
+        blacklistFlags: ['nsfw', 'religious', 'political', 'racist', 'sexist', 'explicit'],
     });
 }
 
@@ -28,6 +28,7 @@ async function nextJoke() {
 </script>
 
 <template>
+    <RouterLink :to="{ name: 'jokeInfo' }" class="mb-8 block">Info</RouterLink>
     <PrimaryButton @click="nextJoke" class="mb-2"> Next </PrimaryButton>
     <template v-if="joke">
         <div class="mb-1 text-3xl font-semibold">

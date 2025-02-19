@@ -110,15 +110,15 @@ export default class JokeApi {
         return data;
     }
 
-    public static joke(options: JokeOptions & { jokeType: 'single'; amount?: 1 }): Promise<SingleTypeJoke>;
-    public static joke(options: JokeOptions & { jokeType: 'twopart'; amount?: 1 }): Promise<TwopartTypeJoke>;
-    public static joke(options?: JokeOptions & { amount?: 1 }): Promise<SingleTypeJoke | TwopartTypeJoke>;
-
     // TODO
     // public static joke(options: JokeOptions & { jokeType: 'single' }): Promise<SingleTypeJoke[]>;
     // public static joke(options: JokeOptions & { jokeType: 'twopart' }): Promise<TwopartTypeJoke[]>;
     // public static joke(options?: JokeOptions): Promise<(SingleTypeJoke | TwopartTypeJoke)[]>;
-    // Return type will be: Promise<SingleTypeJoke[] | TwopartTypeJoke[] | (SingleTypeJoke | TwopartTypeJoke)[] | (SingleTypeJoke | TwopartTypeJoke)>
+    // Return type will be: Promise<SingleTypeJoke | TwopartTypeJoke | (SingleTypeJoke | TwopartTypeJoke)[]>
+
+    public static joke(options: JokeOptions & { jokeType: 'single'; amount?: 1 }): Promise<SingleTypeJoke>;
+    public static joke(options: JokeOptions & { jokeType: 'twopart'; amount?: 1 }): Promise<TwopartTypeJoke>;
+    public static joke(options?: JokeOptions & { amount?: 1 }): Promise<SingleTypeJoke | TwopartTypeJoke>;
 
     public static joke(options?: JokeOptions): Promise<SingleTypeJoke | TwopartTypeJoke> {
         const category = options?.categories?.join(',') ?? 'Any';

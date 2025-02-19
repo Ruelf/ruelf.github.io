@@ -13,8 +13,12 @@ onMounted(async () => {
     jokeQueue.value.push(await getJoke());
 });
 
-async function getJoke() {
-    return await JokeApi.joke({ language: JokeLanguage.English, safeMode: true, blacklistFlags: ['political'] });
+function getJoke() {
+    return JokeApi.joke({
+        language: JokeLanguage.English,
+        safeMode: true,
+        blacklistFlags: ['political'],
+    });
 }
 
 async function nextJoke() {

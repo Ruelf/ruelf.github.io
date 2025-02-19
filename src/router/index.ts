@@ -34,6 +34,11 @@ const router = createRouter({
             component: PdokView,
         },
         {
+            path: '/joke',
+            name: 'joke',
+            component: () => import('@/views/JokeView.vue'),
+        },
+        {
             path: '/f1',
             children: [
                 {

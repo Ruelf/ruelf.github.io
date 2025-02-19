@@ -23,6 +23,7 @@ const navItems: NavItem[] = [
             { title: 'Snowflake', route: 'snowflake' },
             { title: 'Pdok', route: 'pdok' },
             { title: 'Dogs', route: 'dogs' },
+            { title: 'Joke', route: 'joke' },
         ],
     },
 ];

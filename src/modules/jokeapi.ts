@@ -50,7 +50,12 @@ export interface TwopartTypeJoke extends Joke {
     delivery: string;
 }
 
-export type JokeResponse = SuccessResponse & (SingleTypeJoke | TwopartTypeJoke);
+export type SingleJokeResponse = SuccessResponse & (SingleTypeJoke | TwopartTypeJoke);
+
+export type MultipleJokesResponse = SuccessResponse & {
+    amount: number;
+    jokes: (SingleTypeJoke | TwopartTypeJoke)[];
+};
 
 export interface JokeOptions {
     categories?: JokeCategory[];
@@ -89,7 +94,7 @@ export type InfoResponse = SuccessResponse & {
     jokeLanguages: number;
     systemLanguages: number;
     info: string;
-    timestam: number;
+    timestamp: number;
 };
 
 /**
@@ -110,7 +115,10 @@ export default class JokeApi {
     private static readonly baseUrl: string = 'https://v2.jokeapi.dev';
 
     private static async request(path: '/info', params?: never): Promise<InfoResponse>;
-    private static async request(path: `/joke/${string}`, params?: Record<string, unknown>): Promise<JokeResponse>;
+    private static async request(
+        path: `/joke/${string}`,
+        params?: Record<string, unknown>,
+    ): Promise<SingleJokeResponse | MultipleJokesResponse>;
 
     private static async request<T extends SuccessResponse>(
         path: string,
@@ -125,28 +133,30 @@ export default class JokeApi {
         return data;
     }
 
-    // TODO
-    // public static joke(options: JokeOptions & { jokeType: 'single' }): Promise<SingleTypeJoke[]>;
-    // public static joke(options: JokeOptions & { jokeType: 'twopart' }): Promise<TwopartTypeJoke[]>;
-    // public static joke(options?: JokeOptions): Promise<(SingleTypeJoke | TwopartTypeJoke)[]>;
-    // Return type will be: Promise<SingleTypeJoke | TwopartTypeJoke | (SingleTypeJoke | TwopartTypeJoke)[]>
+    public static async joke(options: JokeOptions & { jokeType: 'single'; amount?: 1 }): Promise<SingleTypeJoke>;
+    public static async joke(options: JokeOptions & { jokeType: 'twopart'; amount?: 1 }): Promise<TwopartTypeJoke>;
+    public static async joke(options?: JokeOptions & { amount?: 1 }): Promise<SingleTypeJoke | TwopartTypeJoke>;
 
-    public static joke(options: JokeOptions & { jokeType: 'single'; amount?: 1 }): Promise<SingleTypeJoke>;
-    public static joke(options: JokeOptions & { jokeType: 'twopart'; amount?: 1 }): Promise<TwopartTypeJoke>;
-    public static joke(options?: JokeOptions & { amount?: 1 }): Promise<SingleTypeJoke | TwopartTypeJoke>;
+    public static async joke(options: JokeOptions & { jokeType: 'single' }): Promise<SingleTypeJoke[]>;
+    public static async joke(options: JokeOptions & { jokeType: 'twopart' }): Promise<TwopartTypeJoke[]>;
+    public static async joke(options?: JokeOptions): Promise<(SingleTypeJoke | TwopartTypeJoke)[]>;
 
-    public static joke(options?: JokeOptions): Promise<SingleTypeJoke | TwopartTypeJoke> {
+    public static async joke(
+        options?: JokeOptions,
+    ): Promise<SingleTypeJoke | TwopartTypeJoke | (SingleTypeJoke | TwopartTypeJoke)[]> {
         const category = options?.categories?.join(',') ?? 'Any';
 
-        return this.request(`/joke/${category}`, {
+        const data = await this.request(`/joke/${category}`, {
             lang: options?.language,
             blacklistFlags: options?.blacklistFlags?.join(','),
             type: options?.jokeType,
             contains: options?.search,
             idRange: options?.idRange?.join('-'),
             'safe-mode': options?.safeMode ? true : undefined,
-            amount: 1,
+            amount: options?.amount,
         });
+
+        return 'jokes' in data ? data.jokes : data;
     }
 
     /**

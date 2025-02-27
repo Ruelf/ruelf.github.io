@@ -9,27 +9,32 @@ const jokeQueue = ref<(SingleTypeJoke | TwopartTypeJoke)[]>([]);
 const joke = computed(() => jokeQueue.value[0]);
 
 onMounted(async () => {
-    jokeQueue.value.push(await getJoke());
-    jokeQueue.value.push(await getJoke());
+    jokeQueue.value.push(...(await getJokes(10)));
 });
 
-function getJoke() {
+function getJokes(amount: number) {
     return JokeApi.joke({
         language: JokeLanguage.English,
         safeMode: true,
         blacklistFlags: ['nsfw', 'religious', 'political', 'racist', 'sexist', 'explicit'],
+        amount: amount,
     });
 }
 
 async function nextJoke() {
     jokeQueue.value.shift();
-    jokeQueue.value.push(await getJoke());
+
+    if (jokeQueue.value.length <= 1) {
+        jokeQueue.value.push(...(await getJokes(10)));
+    }
 }
 </script>
 
 <template>
     <RouterLink :to="{ name: 'jokeInfo' }" class="mb-8 block">Info</RouterLink>
+
     <PrimaryButton @click="nextJoke" class="mb-2"> Next </PrimaryButton>
+
     <template v-if="joke">
         <div class="mb-1 text-3xl font-semibold">
             {{ joke.category }}

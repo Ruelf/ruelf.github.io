@@ -180,13 +180,13 @@ export default class JokeApi {
         const category = options?.categories?.join(',') ?? 'Any';
 
         const data = await this.request(`/joke/${category}`, {
-            lang: options?.language,
-            blacklistFlags: options?.blacklistFlags?.join(','),
-            type: options?.jokeType,
-            contains: options?.search,
-            idRange: options?.idRange?.join('-'),
+            'lang': options?.language,
+            'blacklistFlags': options?.blacklistFlags?.join(','),
+            'type': options?.jokeType,
+            'contains': options?.search,
+            'idRange': options?.idRange?.join('-'),
             'safe-mode': options?.safeMode ? true : undefined,
-            amount: options?.amount,
+            'amount': options?.amount,
         });
 
         return 'jokes' in data ? data.jokes : data;

@@ -30,7 +30,9 @@ export class Race {
         this.date = new Date(data.date);
 
         if (data.Results) {
-            this.results = data.Results.map((result) => new Result(result, this));
+            this.results = data.Results.map(
+                (result) => new Result(result, this),
+            );
         }
     }
 }

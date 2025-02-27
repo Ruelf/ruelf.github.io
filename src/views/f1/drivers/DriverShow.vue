@@ -4,7 +4,13 @@ import Link from '@/components/Link.vue';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import PaginationButtons from '@/components/PaginationButtons.vue';
 import { Table, Td, Th, Tr } from '@/components/table';
-import { Driver, Jolpica, type ApiOptions, type Pagination, type Race } from '@/modules/jolpica';
+import {
+    Driver,
+    Jolpica,
+    type ApiOptions,
+    type Pagination,
+    type Race,
+} from '@/modules/jolpica';
 import { onMounted, ref } from 'vue';
 
 const props = defineProps<{
@@ -21,7 +27,10 @@ onMounted(async () => {
 
 async function refreshRaces(options?: ApiOptions) {
     if (driver.value) {
-        wonRaces.value = await driver.value.getRaceResults({ position: 1 }, options);
+        wonRaces.value = await driver.value.getRaceResults(
+            { position: 1 },
+            options,
+        );
     }
 }
 
@@ -52,7 +61,10 @@ function nextPage() {
     <template v-if="driver">
         <div class="px-2 text-4xl sm:px-0">{{ driver.name }}</div>
 
-        <div v-if="wonRaces && wonRaces.data.length" class="mt-4 grid grid-cols-12 gap-4">
+        <div
+            v-if="wonRaces && wonRaces.data.length"
+            class="mt-4 grid grid-cols-12 gap-4"
+        >
             <Card class="col-span-12 sm:col-span-6">
                 <Table>
                     <template #head>
@@ -62,14 +74,24 @@ function nextPage() {
                         </Tr>
                     </template>
                     <template #body>
-                        <Tr v-for="race of wonRaces.data" :key="race.season.toString() + race.name">
+                        <Tr
+                            v-for="race of wonRaces.data"
+                            :key="race.season.toString() + race.name"
+                        >
                             <Td>
-                                <Link :href="race.url" target="_blank"> {{ race.season }} {{ race.name }} </Link>
+                                <Link :href="race.url" target="_blank">
+                                    {{ race.season }} {{ race.name }}
+                                </Link>
                             </Td>
                             <Td>
-                                <Link :href="race.circuit.url" target="_blank">{{ race.circuit.name }}</Link>
+                                <Link
+                                    :href="race.circuit.url"
+                                    target="_blank"
+                                    >{{ race.circuit.name }}</Link
+                                >
                                 <div class="text-xs dark:text-gray-400">
-                                    {{ race.circuit.location.locality }}, {{ race.circuit.location.country }}
+                                    {{ race.circuit.location.locality }},
+                                    {{ race.circuit.location.country }}
                                 </div>
                             </Td>
                         </Tr>

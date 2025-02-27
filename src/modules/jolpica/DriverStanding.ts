@@ -25,6 +25,8 @@ export class DriverStanding {
         this.points = Number(data.points);
         this.wins = Number(data.wins);
         this.Driver = new Driver(data.Driver);
-        this.Constructors = data.Constructors.map((constructorData) => new Constructor(constructorData));
+        this.Constructors = data.Constructors.map(
+            (constructorData) => new Constructor(constructorData),
+        );
     }
 }

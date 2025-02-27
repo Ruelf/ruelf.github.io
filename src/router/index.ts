@@ -66,14 +66,17 @@ const router = createRouter({
                             path: ':season',
                             component: SeasonShow,
                             props: (route) => ({
-                                season: Number(route.params.season) || undefined,
+                                season:
+                                    Number(route.params.season) || undefined,
                             }),
                             children: [
                                 {
                                     path: '',
                                     name: 'seasonHome',
                                     props: (route) => ({
-                                        season: Number(route.params.season) || undefined,
+                                        season:
+                                            Number(route.params.season) ||
+                                            undefined,
                                     }),
                                     component: SeasonHome,
                                 },
@@ -81,7 +84,9 @@ const router = createRouter({
                                     path: 'drivers',
                                     name: 'seasonDrivers',
                                     props: (route) => ({
-                                        season: Number(route.params.season) || undefined,
+                                        season:
+                                            Number(route.params.season) ||
+                                            undefined,
                                     }),
                                     component: SeasonDrivers,
                                 },

@@ -10,7 +10,9 @@ const allSeasons = range(config.f1.seasons.min, config.f1.seasons.max + 1);
     <Card class="p-4">
         <div class="flex flex-wrap gap-16">
             <div
-                v-for="[key, seasons] of allSeasons.groupBy((season) => season - (season % 10))"
+                v-for="[key, seasons] of allSeasons.groupBy(
+                    (season) => season - (season % 10),
+                )"
                 :key="key"
                 class="w-16"
             >
@@ -20,7 +22,10 @@ const allSeasons = range(config.f1.seasons.min, config.f1.seasons.max + 1);
 
                 <div class="flex flex-col gap-1">
                     <div v-for="season of seasons" :key="season">
-                        <RouterLink :to="{ name: 'seasonHome', params: { season } }" class="underline">
+                        <RouterLink
+                            :to="{ name: 'seasonHome', params: { season } }"
+                            class="underline"
+                        >
                             {{ season }}
                         </RouterLink>
                     </div>

@@ -45,12 +45,22 @@ async function refreshData() {
                         {{ standing.positionText }}
                     </Td>
                     <Td>
-                        <RouterLink :to="{ name: 'driverShow', params: { id: standing.Driver.id } }" class="underline">
+                        <RouterLink
+                            :to="{
+                                name: 'driverShow',
+                                params: { id: standing.Driver.id },
+                            }"
+                            class="underline"
+                        >
                             {{ standing.Driver.name }}
                         </RouterLink>
                     </Td>
                     <Td>
-                        {{ standing.Constructors.map((constructor) => constructor.name).join(', ') }}
+                        {{
+                            standing.Constructors.map(
+                                (constructor) => constructor.name,
+                            ).join(', ')
+                        }}
                     </Td>
                     <Td>
                         {{ standing.points }}

@@ -48,6 +48,15 @@ export function collect<T>(data: Iterable<T> = []): Collection<T> {
     return new Collection(...data);
 }
 
-export function range(start: number, stop: number, step: number = 1): Collection<number> {
-    return collect(Array.from({ length: (stop - start) / step }, (_, index) => start + index * step));
+export function range(
+    start: number,
+    stop: number,
+    step: number = 1,
+): Collection<number> {
+    return collect(
+        Array.from(
+            { length: (stop - start) / step },
+            (_, index) => start + index * step,
+        ),
+    );
 }

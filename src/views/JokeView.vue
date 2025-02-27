@@ -16,7 +16,14 @@ function getJokes(amount: number) {
     return JokeApi.joke({
         language: JokeLanguage.English,
         safeMode: true,
-        blacklistFlags: ['nsfw', 'religious', 'political', 'racist', 'sexist', 'explicit'],
+        blacklistFlags: [
+            'nsfw',
+            'religious',
+            'political',
+            'racist',
+            'sexist',
+            'explicit',
+        ],
         amount: amount,
     });
 }

@@ -30,7 +30,9 @@ const navItems: NavItem[] = [
 </script>
 
 <template>
-    <nav class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
+    <nav
+        class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800"
+    >
         <div class="mx-auto max-w-7xl p-4">
             <div class="flex items-center gap-4">
                 <RouterLink :to="{ name: 'home' }" class="group rounded-full">
@@ -40,12 +42,19 @@ const navItems: NavItem[] = [
                     />
                 </RouterLink>
 
-                <Menu v-for="item of navItems" :key="item.title" as="div" class="relative inline-block text-left">
+                <Menu
+                    v-for="item of navItems"
+                    :key="item.title"
+                    as="div"
+                    class="relative inline-block text-left"
+                >
                     <MenuButton class="rounded-md p-2 hover:bg-gray-700">
                         {{ item.title }}
                     </MenuButton>
 
-                    <MenuItems class="absolute left-0 mt-2 min-w-32 overflow-hidden rounded-md dark:bg-gray-700">
+                    <MenuItems
+                        class="absolute left-0 mt-2 min-w-32 overflow-hidden rounded-md dark:bg-gray-700"
+                    >
                         <MenuItem
                             v-for="child of item.children"
                             :key="child.title"

@@ -1,5 +1,12 @@
 import type { Response } from '@/types/jolpica';
-import type { CircuitTable, DriverStandingsTable, DriverTable, RaceTable, SeasonParam, SeasonTable } from './Jolpica';
+import type {
+    CircuitTable,
+    DriverStandingsTable,
+    DriverTable,
+    RaceTable,
+    SeasonParam,
+    SeasonTable,
+} from './Jolpica';
 import axios from 'axios';
 
 export type UrlParams = Partial<{
@@ -57,13 +64,22 @@ export class UrlBuilder<R extends keyof TableMap = 'RaceTable'> {
 
         url += '.json';
 
-        return url.replace(/\{([a-z]+)}/g, (fullMatch, name: keyof UrlParams): string => {
-            return name in this.params ? `${this.params[name]}` : fullMatch;
-        });
+        return url.replace(
+            /\{([a-z]+)}/g,
+            (fullMatch, name: keyof UrlParams): string => {
+                return name in this.params ? `${this.params[name]}` : fullMatch;
+            },
+        );
     }
 
-    private extend<T extends keyof TableMap>(params: UrlParams, dataKey?: T): UrlBuilder<T> {
+    private extend<T extends keyof TableMap>(
+        params: UrlParams,
+        dataKey?: T,
+    ): UrlBuilder<T> {
         // @ts-expect-error shut up ts
-        return new UrlBuilder<T>({ ...this.params, ...params }, dataKey ?? this.dataKey);
+        return new UrlBuilder<T>(
+            { ...this.params, ...params },
+            dataKey ?? this.dataKey,
+        );
     }
 }

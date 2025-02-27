@@ -243,9 +243,17 @@ export class Endpoint<T extends keyof Endpoints> {
     public get url(): string {
         return this.getUrl(
             this.params
-                ? this.path.replace(/\{([a-z]+)}/g, (fullMatch: string, name: keyof Endpoints[T]['params']): string => {
-                      return name in this.params ? `${this.params[name]}` : fullMatch;
-                  })
+                ? this.path.replace(
+                      /\{([a-z]+)}/g,
+                      (
+                          fullMatch: string,
+                          name: keyof Endpoints[T]['params'],
+                      ): string => {
+                          return name in this.params
+                              ? `${this.params[name]}`
+                              : fullMatch;
+                      },
+                  )
                 : this.path,
         );
     }
@@ -257,7 +265,10 @@ export class Endpoint<T extends keyof Endpoints> {
 
 // TODO: URL Builder at some point would help
 export class Jolpica {
-    public static async request<T extends keyof Endpoints, R = Endpoints[T]['returns']>(
+    public static async request<
+        T extends keyof Endpoints,
+        R = Endpoints[T]['returns'],
+    >(
         path: T,
         params: Endpoints[T]['params'],
         options?: ApiOptions,
@@ -273,21 +284,32 @@ export class Jolpica {
 
     // Circuits
 
-    private static paginateCircuits(data: MRData<CircuitTable>): Pagination<Circuit> {
+    private static paginateCircuits(
+        data: MRData<CircuitTable>,
+    ): Pagination<Circuit> {
         return new Pagination(
             data,
             data.CircuitTable.Circuits.map((circuit) => new Circuit(circuit)),
         );
     }
 
-    public static async getCircuits(options?: ApiOptions): Promise<Pagination<Circuit>> {
+    public static async getCircuits(
+        options?: ApiOptions,
+    ): Promise<Pagination<Circuit>> {
         const { MRData } = await this.request('/circuits', {}, options);
 
         return this.paginateCircuits(MRData);
     }
 
-    public static async getSeasonCircuits(season: SeasonParam, options?: ApiOptions): Promise<Pagination<Circuit>> {
-        const { MRData } = await this.request('/{season}/circuits', { season }, options);
+    public static async getSeasonCircuits(
+        season: SeasonParam,
+        options?: ApiOptions,
+    ): Promise<Pagination<Circuit>> {
+        const { MRData } = await this.request(
+            '/{season}/circuits',
+            { season },
+            options,
+        );
 
         return this.paginateCircuits(MRData);
     }
@@ -297,20 +319,37 @@ export class Jolpica {
         round: Round,
         options?: ApiOptions,
     ): Promise<Circuit | null> {
-        const { MRData } = await this.request('/{season}/{round}/circuits', { season, round }, options);
+        const { MRData } = await this.request(
+            '/{season}/{round}/circuits',
+            { season, round },
+            options,
+        );
 
-        return +MRData.total == 0 ? null : new Circuit(MRData.CircuitTable.Circuits[0]);
+        return +MRData.total == 0
+            ? null
+            : new Circuit(MRData.CircuitTable.Circuits[0]);
     }
 
-    public static async getCircuit(id: string, options?: ApiOptions): Promise<Circuit | null> {
-        const { MRData } = await this.request('/circuits/{id}', { id }, options);
+    public static async getCircuit(
+        id: string,
+        options?: ApiOptions,
+    ): Promise<Circuit | null> {
+        const { MRData } = await this.request(
+            '/circuits/{id}',
+            { id },
+            options,
+        );
 
-        return +MRData.total == 0 ? null : new Circuit(MRData.CircuitTable.Circuits[0]);
+        return +MRData.total == 0
+            ? null
+            : new Circuit(MRData.CircuitTable.Circuits[0]);
     }
 
     // Drivers
 
-    private static paginateDrivers(data: MRData<DriverTable>): Pagination<Driver> {
+    private static paginateDrivers(
+        data: MRData<DriverTable>,
+    ): Pagination<Driver> {
         return new Pagination(
             data,
             data.DriverTable.Drivers.map((driver) => new Driver(driver)),
@@ -331,7 +370,11 @@ export class Jolpica {
             }
         }
 
-        const { MRData } = await this.request<keyof Endpoints, DriverTable>(path, params, options);
+        const { MRData } = await this.request<keyof Endpoints, DriverTable>(
+            path,
+            params,
+            options,
+        );
 
         return new Pagination(
             MRData,
@@ -339,10 +382,15 @@ export class Jolpica {
         );
     }
 
-    public static async getDriver(id: string, options?: ApiOptions): Promise<Driver | null> {
+    public static async getDriver(
+        id: string,
+        options?: ApiOptions,
+    ): Promise<Driver | null> {
         const { MRData } = await this.request('/drivers/{id}', { id }, options);
 
-        return +MRData.total == 0 ? null : new Driver(MRData.DriverTable.Drivers[0]);
+        return +MRData.total == 0
+            ? null
+            : new Driver(MRData.DriverTable.Drivers[0]);
     }
 
     public static async getDriverRaceResults<T extends keyof Endpoints>(
@@ -365,7 +413,11 @@ export class Jolpica {
             }
         }
 
-        const { MRData } = await this.request<T, RaceTable>(path, params, options);
+        const { MRData } = await this.request<T, RaceTable>(
+            path,
+            params,
+            options,
+        );
 
         return new Pagination(
             MRData,
@@ -375,8 +427,16 @@ export class Jolpica {
 
     // Races
 
-    public static async getSeasonRound(season: SeasonParam, round: Round, options?: ApiOptions): Promise<Race | null> {
-        const { MRData } = await this.request('/{season}/{round}', { season, round }, options);
+    public static async getSeasonRound(
+        season: SeasonParam,
+        round: Round,
+        options?: ApiOptions,
+    ): Promise<Race | null> {
+        const { MRData } = await this.request(
+            '/{season}/{round}',
+            { season, round },
+            options,
+        );
 
         return +MRData.total == 0 ? null : new Race(MRData.RaceTable.Races[0]);
     }
@@ -387,7 +447,11 @@ export class Jolpica {
         season: SeasonParam,
         options?: ApiOptions,
     ): Promise<Collection<DriverStanding>> {
-        const { MRData } = await this.request('/{season}/driverstandings', { season }, { limit: 50, ...options });
+        const { MRData } = await this.request(
+            '/{season}/driverstandings',
+            { season },
+            { limit: 50, ...options },
+        );
 
         return collect(
             MRData.StandingsTable.StandingsLists[0]?.DriverStandings.map(

@@ -15,9 +15,11 @@ onMounted(() => {
 });
 
 function refreshDogs() {
-    axios.get<ResponseData>('https://dog.ceo/api/breeds/image/random/18').then(({ data }) => {
-        urls.value = data.message;
-    });
+    axios
+        .get<ResponseData>('https://dog.ceo/api/breeds/image/random/18')
+        .then(({ data }) => {
+            urls.value = data.message;
+        });
 }
 </script>
 
@@ -30,7 +32,12 @@ function refreshDogs() {
                 :src="url"
                 alt="dog"
                 class="size-full rounded-lg object-cover"
-                :style="{ transform: 'rotate(' + Math.floor(Math.random() * 30 - 15) + 'deg)' }"
+                :style="{
+                    transform:
+                        'rotate(' +
+                        Math.floor(Math.random() * 30 - 15) +
+                        'deg)',
+                }"
             />
         </div>
     </div>

@@ -10,15 +10,18 @@ const data = ref<Pdok.Address[]>();
 const inputText = ref<string>();
 
 async function onChange(): Promise<void> {
-    const response = await axios.get<Pdok.Response>('https://api.pdok.nl/bzk/locatieserver/search/v3_1/suggest', {
-        params: {
-            q: inputText.value,
-            rows: 20,
-            start: 0,
-            fq: 'type:adres',
-            fl: '*',
+    const response = await axios.get<Pdok.Response>(
+        'https://api.pdok.nl/bzk/locatieserver/search/v3_1/suggest',
+        {
+            params: {
+                q: inputText.value,
+                rows: 20,
+                start: 0,
+                fq: 'type:adres',
+                fl: '*',
+            },
         },
-    });
+    );
 
     data.value = response.data.response.docs;
 }

@@ -78,7 +78,9 @@ function updateUrl() {
 
         <datalist id="season-markers">
             <option
-                v-for="year of range(minYear, maxYear + 1).filter((year) => year % 10 == 0)"
+                v-for="year of range(minYear, maxYear + 1).filter(
+                    (year) => year % 10 == 0,
+                )"
                 :key="year"
                 :value="year"
             ></option>
@@ -104,14 +106,21 @@ function updateUrl() {
                         </Td>
                         <Td>
                             <RouterLink
-                                :to="{ name: 'driverShow', params: { id: standing.Driver.id } }"
+                                :to="{
+                                    name: 'driverShow',
+                                    params: { id: standing.Driver.id },
+                                }"
                                 class="underline"
                             >
                                 {{ standing.Driver.name }}
                             </RouterLink>
                         </Td>
                         <Td>
-                            {{ standing.Constructors.map((constructor) => constructor.name).join(', ') }}
+                            {{
+                                standing.Constructors.map(
+                                    (constructor) => constructor.name,
+                                ).join(', ')
+                            }}
                         </Td>
                         <Td>
                             {{ standing.points }}

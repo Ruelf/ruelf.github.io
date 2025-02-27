@@ -15,7 +15,10 @@ defineEmits<{
 
 <template>
     <div class="flex items-center justify-between gap-4">
-        <PrimaryButton @click="$emit('previousPage')" :disabled="pagination.currentPage <= 1">
+        <PrimaryButton
+            @click="$emit('previousPage')"
+            :disabled="pagination.currentPage <= 1"
+        >
             Previous page
         </PrimaryButton>
 
@@ -37,7 +40,10 @@ defineEmits<{
             </div>
         </div>
 
-        <PrimaryButton @click="$emit('nextPage')" :disabled="pagination.currentPage >= pagination.totalPages">
+        <PrimaryButton
+            @click="$emit('nextPage')"
+            :disabled="pagination.currentPage >= pagination.totalPages"
+        >
             Next page
         </PrimaryButton>
     </div>

@@ -13,7 +13,9 @@ setInterval(update, 10);
 <template>
     <template v-if="now">
         <h1>
-            <code>{{ BigInt(Math.floor(now.getTime() - 1420070400000)) << 22n }}</code>
+            <code>{{
+                BigInt(Math.floor(now.getTime() - 1420070400000)) << 22n
+            }}</code>
         </h1>
         <p>{{ now.toDateString() }}</p>
         <p>{{ now.toTimeString() }}</p>

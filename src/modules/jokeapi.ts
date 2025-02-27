@@ -2,7 +2,13 @@ import axios from 'axios';
 
 export type ResponseFormat = 'json' | 'xml' | 'yaml' | 'txt';
 
-export type JokeCategory = 'Programming' | 'Miscellaneous' | 'Dark' | 'Pun' | 'Spooky' | 'Christmas';
+export type JokeCategory =
+    | 'Programming'
+    | 'Miscellaneous'
+    | 'Dark'
+    | 'Pun'
+    | 'Spooky'
+    | 'Christmas';
 
 export enum JokeLanguage {
     Czech = 'cs',
@@ -13,7 +19,13 @@ export enum JokeLanguage {
     Portuguese = 'pt',
 }
 
-export type JokeBlacklistFlag = 'nsfw' | 'religious' | 'political' | 'racist' | 'sexist' | 'explicit';
+export type JokeBlacklistFlag =
+    | 'nsfw'
+    | 'religious'
+    | 'political'
+    | 'racist'
+    | 'sexist'
+    | 'explicit';
 
 export type JokeType = 'single' | 'twopart';
 
@@ -50,7 +62,8 @@ export interface TwopartTypeJoke extends Joke {
     delivery: string;
 }
 
-export type SingleJokeResponse = SuccessResponse & (SingleTypeJoke | TwopartTypeJoke);
+export type SingleJokeResponse = SuccessResponse &
+    (SingleTypeJoke | TwopartTypeJoke);
 
 export type MultipleJokesResponse = SuccessResponse & {
     amount: number;
@@ -114,7 +127,10 @@ export type InfoResponse = SuccessResponse & {
 export default class JokeApi {
     private static readonly baseUrl: string = 'https://v2.jokeapi.dev';
 
-    private static async request(path: '/info', params?: never): Promise<InfoResponse>;
+    private static async request(
+        path: '/info',
+        params?: never,
+    ): Promise<InfoResponse>;
     private static async request(
         path: `/joke/${string}`,
         params?: Record<string, unknown>,
@@ -124,7 +140,10 @@ export default class JokeApi {
         path: string,
         params?: Record<string, unknown>,
     ): Promise<T> {
-        const { data } = await axios.get<T | ErrorResponse>(path, { baseURL: this.baseUrl, params });
+        const { data } = await axios.get<T | ErrorResponse>(path, {
+            baseURL: this.baseUrl,
+            params,
+        });
 
         if (data.error) {
             throw new JokeApiError(data.message);
@@ -133,17 +152,31 @@ export default class JokeApi {
         return data;
     }
 
-    public static async joke(options: JokeOptions & { jokeType: 'single'; amount?: 1 }): Promise<SingleTypeJoke>;
-    public static async joke(options: JokeOptions & { jokeType: 'twopart'; amount?: 1 }): Promise<TwopartTypeJoke>;
-    public static async joke(options?: JokeOptions & { amount?: 1 }): Promise<SingleTypeJoke | TwopartTypeJoke>;
+    public static async joke(
+        options: JokeOptions & { jokeType: 'single'; amount?: 1 },
+    ): Promise<SingleTypeJoke>;
+    public static async joke(
+        options: JokeOptions & { jokeType: 'twopart'; amount?: 1 },
+    ): Promise<TwopartTypeJoke>;
+    public static async joke(
+        options?: JokeOptions & { amount?: 1 },
+    ): Promise<SingleTypeJoke | TwopartTypeJoke>;
 
-    public static async joke(options: JokeOptions & { jokeType: 'single' }): Promise<SingleTypeJoke[]>;
-    public static async joke(options: JokeOptions & { jokeType: 'twopart' }): Promise<TwopartTypeJoke[]>;
-    public static async joke(options?: JokeOptions): Promise<(SingleTypeJoke | TwopartTypeJoke)[]>;
+    public static async joke(
+        options: JokeOptions & { jokeType: 'single' },
+    ): Promise<SingleTypeJoke[]>;
+    public static async joke(
+        options: JokeOptions & { jokeType: 'twopart' },
+    ): Promise<TwopartTypeJoke[]>;
+    public static async joke(
+        options?: JokeOptions,
+    ): Promise<(SingleTypeJoke | TwopartTypeJoke)[]>;
 
     public static async joke(
         options?: JokeOptions,
-    ): Promise<SingleTypeJoke | TwopartTypeJoke | (SingleTypeJoke | TwopartTypeJoke)[]> {
+    ): Promise<
+        SingleTypeJoke | TwopartTypeJoke | (SingleTypeJoke | TwopartTypeJoke)[]
+    > {
         const category = options?.categories?.join(',') ?? 'Any';
 
         const data = await this.request(`/joke/${category}`, {

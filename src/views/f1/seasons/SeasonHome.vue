@@ -22,7 +22,10 @@ onMounted(() => {
 });
 
 async function refreshData() {
-    const { MRData } = await Jolpica.request('/{season}/results/{position}', { season: props.season, position: 1 });
+    const { MRData } = await Jolpica.request('/{season}/results/{position}', {
+        season: props.season,
+        position: 1,
+    });
     races.value = MRData.RaceTable.Races.map((race) => new Race(race));
 }
 </script>
@@ -43,9 +46,13 @@ async function refreshData() {
                     <Td class="w-4">{{ race.round }}</Td>
                     <Td>
                         <div>{{ race.name }}</div>
-                        <div class="text dark:text-gray-400">{{ race.circuit.name }}</div>
+                        <div class="text dark:text-gray-400">
+                            {{ race.circuit.name }}
+                        </div>
                     </Td>
-                    <Td>{{ race.results ? race.results[0].Driver.name : 'Unknown' }}</Td>
+                    <Td>{{
+                        race.results ? race.results[0].Driver.name : 'Unknown'
+                    }}</Td>
                 </Tr>
             </template>
         </Table>

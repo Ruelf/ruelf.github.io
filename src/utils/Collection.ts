@@ -1,3 +1,5 @@
+import type { Json } from '@/types/utility';
+
 export class Collection<T> extends Array<T> {
     public insertAt(index: number, item: T): void {
         this.splice(index, 0, item);
@@ -21,6 +23,10 @@ export class Collection<T> extends Array<T> {
         return collect(this.filter((item) => values.includes(item[key])));
     }
 
+    // public pluck<K extends keyof T, V extends keyof T>(
+    //     key: K,
+    //     value: K,
+    // ): Map<T[K], T[V]>;
     public pluck<K extends keyof T>(key: K): Collection<T[K]> {
         return collect(this.map((item) => item[key]));
     }
@@ -39,8 +45,51 @@ export class Collection<T> extends Array<T> {
         }, new Map());
     }
 
-    public random(): T {
-        return this[Math.floor(Math.random() * this.length)];
+    // public zip<O>(other: O[]): Collection<[T, O]> {
+    //     //
+    // }
+
+    public random(): T;
+    public random(count: number): Collection<T>;
+    public random(count?: number): T | Collection<T> {
+        if (count === undefined) {
+            return this[Math.floor(Math.random() * this.length)];
+        } else {
+            const copy = collect(this);
+            const values = collect<T>();
+
+            for (
+                let i = 0;
+                i < Math.max(0, Math.min(this.length, count));
+                i++
+            ) {
+                const item = copy.random();
+                copy.remove(item);
+                values.push(item);
+            }
+
+            return values;
+        }
+    }
+
+    public pipe<R>(callback: (collection: this) => R): R {
+        return callback(this);
+    }
+
+    public shuffle(): Collection<T> {
+        return this.random(this.length);
+    }
+
+    public min(this: Collection<number>): number {
+        return Math.min(...this);
+    }
+
+    public max(this: Collection<number>): number {
+        return Math.max(...this);
+    }
+
+    public jsonCopy(this: Collection<Json>): Collection<Json> {
+        return JSON.parse(JSON.stringify(this));
     }
 }
 

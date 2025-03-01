@@ -3,5 +3,5 @@ import { range } from '@/utils';
 </script>
 
 <template>
-    {{ range(0, 10).shuffle().join(', ') }}
+    {{ range(0, 10).random(5) }}
 </template>

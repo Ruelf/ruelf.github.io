@@ -1,5 +1,3 @@
-import type { Json } from '@/types/utility';
-
 export class Collection<T> extends Array<T> {
     public insertAt(index: number, item: T): void {
         this.splice(index, 0, item);
@@ -15,22 +13,6 @@ export class Collection<T> extends Array<T> {
         this.removeAt(this.indexOf(item));
     }
 
-    public where<K extends keyof T>(key: K, value: T[K]): Collection<T> {
-        return collect(this.filter((item) => item[key] === value));
-    }
-
-    public whereIn<K extends keyof T>(key: K, values: T[K][]): Collection<T> {
-        return collect(this.filter((item) => values.includes(item[key])));
-    }
-
-    // public pluck<K extends keyof T, V extends keyof T>(
-    //     key: K,
-    //     value: K,
-    // ): Map<T[K], T[V]>;
-    public pluck<K extends keyof T>(key: K): Collection<T[K]> {
-        return collect(this.map((item) => item[key]));
-    }
-
     public groupBy<K>(callback: (item: T) => K): Map<K, Collection<T>> {
         return this.reduce<Map<K, Collection<T>>>((previous, current) => {
             const key = callback(current);
@@ -44,10 +26,6 @@ export class Collection<T> extends Array<T> {
             return previous;
         }, new Map());
     }
-
-    // public zip<O>(other: O[]): Collection<[T, O]> {
-    //     //
-    // }
 
     public random(): T;
     public random(count: number): Collection<T>;
@@ -70,26 +48,6 @@ export class Collection<T> extends Array<T> {
 
             return values;
         }
-    }
-
-    public pipe<R>(callback: (collection: this) => R): R {
-        return callback(this);
-    }
-
-    public shuffle(): Collection<T> {
-        return this.random(this.length);
-    }
-
-    public min(this: Collection<number>): number {
-        return Math.min(...this);
-    }
-
-    public max(this: Collection<number>): number {
-        return Math.max(...this);
-    }
-
-    public jsonCopy(this: Collection<Json>): Collection<Json> {
-        return JSON.parse(JSON.stringify(this));
     }
 }
 

@@ -14,7 +14,7 @@ export class Collection<T> extends Array<T> {
     }
 
     public groupBy<K>(callback: (item: T) => K): Map<K, Collection<T>> {
-        return this.reduce<Map<K, Collection<T>>>((previous, current) => {
+        return this.reduce((previous, current) => {
             const key = callback(current);
 
             if (!previous.has(key)) {
@@ -24,7 +24,7 @@ export class Collection<T> extends Array<T> {
             previous.get(key)?.push(current);
 
             return previous;
-        }, new Map());
+        }, new Map<K, Collection<T>>());
     }
 
     public random(): T;

@@ -24,6 +24,7 @@ const navItems: NavItem[] = [
             { title: 'Pdok', route: 'pdok' },
             { title: 'Dogs', route: 'dogs' },
             { title: 'Joke', route: 'joke' },
+            { title: 'Morse', route: 'morse' },
         ],
     },
 ];

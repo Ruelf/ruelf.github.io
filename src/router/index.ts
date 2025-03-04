@@ -12,6 +12,7 @@ import DogsView from '@/views/DogsView.vue';
 import JokeView from '@/views/JokeView.vue';
 import JokeInfo from '@/views/JokeInfo.vue';
 import TestView from '@/views/TestView.vue';
+import MorseView from '@/views/MorseView.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,6 +26,11 @@ const router = createRouter({
             path: '/test',
             name: 'test',
             component: TestView,
+        },
+        {
+            path: '/morse',
+            name: 'morse',
+            component: MorseView,
         },
         {
             path: '/snowflake',

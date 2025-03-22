@@ -63,11 +63,15 @@ const output = computed(() => {
 </script>
 
 <template>
-    <textarea
-        v-model="input"
-        rows="20"
-        class="w-full rounded-md border border-gray-300 px-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600"
-    ></textarea>
+    <div
+        class="* grid grid-cols-12 gap-4 *:col-span-6 *:max-h-[40rem] *:overflow-scroll"
+    >
+        <textarea
+            v-model="input"
+            rows="20"
+            class="w-full rounded-md border border-gray-300 px-1 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600"
+        ></textarea>
 
-    <highlightjs language="typescript" :code="output" :style="'monokai-'" />
+        <highlightjs language="typescript" :code="output" :style="'monokai-'" />
+    </div>
 </template>

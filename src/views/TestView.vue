@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import DraggabletTest, { type DraggableEvent } from '@/components/DraggabletTest.vue';
+import DraggabletTest, {
+    type DraggableEvent,
+} from '@/components/DraggabletTest.vue';
 import { ref } from 'vue';
 
 interface Foo {
@@ -9,7 +11,7 @@ interface Foo {
 const test = ref<Foo[]>();
 
 function onChange(event: DraggableEvent<Foo>): void {
-    event.added?.eleme
+    console.log(event);
 }
 </script>
 

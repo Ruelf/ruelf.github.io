@@ -76,9 +76,9 @@ export class UrlBuilder<R extends keyof TableMap = 'RaceTable'> {
         params: UrlParams,
         dataKey?: T,
     ): UrlBuilder<T> {
-        // @ts-expect-error shut up ts
         return new UrlBuilder<T>(
             { ...this.params, ...params },
+            // @ts-expect-error shut up KKts
             dataKey ?? this.dataKey,
         );
     }

@@ -13,6 +13,7 @@ import JokeView from '@/views/JokeView.vue';
 import JokeInfo from '@/views/JokeInfo.vue';
 import TestView from '@/views/TestView.vue';
 import MorseView from '@/views/MorseView.vue';
+import TsView from '@/views/TsView.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,6 +57,11 @@ const router = createRouter({
             path: '/joke/info',
             name: 'jokeInfo',
             component: JokeInfo,
+        },
+        {
+            path: '/ts',
+            name: 'ts',
+            component: TsView,
         },
         {
             path: '/f1',

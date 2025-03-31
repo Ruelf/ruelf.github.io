@@ -6,21 +6,15 @@ const input = ref();
 function getType(value: unknown): string {
     if (value === null) {
         return 'null';
-    }
-    if (typeof value === 'boolean') {
+    } else if (typeof value === 'boolean') {
         return 'boolean';
-    }
-    if (typeof value === 'string') {
+    } else if (typeof value === 'string') {
         return 'string';
-    }
-    if (typeof value === 'number') {
+    } else if (typeof value === 'number') {
         return 'number';
-    }
-
-    if (Array.isArray(value)) {
+    } else if (Array.isArray(value)) {
         return `Array<${value.length ? getType(value[0]) : 'unknown'}>`;
-    }
-    if (typeof value === 'object') {
+    } else if (typeof value === 'object') {
         return `{\n${Object.keys(value)
             .map(
                 (key) =>

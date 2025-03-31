@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import config from '@/config';
 import router from '@/router';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 
 interface NavItem {
@@ -34,7 +36,7 @@ const navItems: NavItem[] = [
     <nav
         class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800"
     >
-        <div class="mx-auto max-w-7xl p-4">
+        <div class="mx-auto flex max-w-7xl items-center justify-between p-4">
             <div class="flex items-center gap-4">
                 <RouterLink :to="{ name: 'home' }" class="group rounded-full">
                     <img
@@ -68,6 +70,14 @@ const navItems: NavItem[] = [
                     </MenuItems>
                 </Menu>
             </div>
+
+            <a
+                :href="config.repoUrl"
+                class="rounded-md p-1 hover:bg-gray-700"
+                target="_blank"
+            >
+                <FontAwesomeIcon :icon="['fab', 'github']" class="size-6" />
+            </a>
         </div>
     </nav>
 </template>

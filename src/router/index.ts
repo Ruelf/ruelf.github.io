@@ -14,6 +14,7 @@ import JokeInfo from '@/views/JokeInfo.vue';
 import TestView from '@/views/TestView.vue';
 import MorseView from '@/views/MorseView.vue';
 import TsView from '@/views/TsView.vue';
+import CubeTimer from '@/views/cube/CubeTimer.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -124,6 +125,16 @@ const router = createRouter({
                             props: true,
                         },
                     ],
+                },
+            ],
+        },
+        {
+            path: '/cube',
+            children: [
+                {
+                    path: 'timer',
+                    name: 'cubeTimer',
+                    component: CubeTimer,
                 },
             ],
         },

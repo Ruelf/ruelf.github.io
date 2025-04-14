@@ -1,6 +1,7 @@
 import type { Response } from '@/types/jolpica';
 import type { Json } from '@/types/utility';
 import axios, { type AxiosRequestConfig } from 'axios';
+import { ref, watch, type Ref } from 'vue';
 
 export async function makeJolpicaRequest<T extends Json>(
     path: string,
@@ -38,4 +39,26 @@ export function sleep(timeout: number): Promise<void> {
             resolve();
         }, timeout);
     });
+}
+export function localStorageRef<T extends Json>(
+    key: string,
+): Ref<T | undefined>;
+export function localStorageRef<T extends Json>(
+    key: string,
+    defaultValue: T,
+): Ref<T>;
+export function localStorageRef<T extends Json>(key: string, defaultValue?: T) {
+    const item = localStorage.getItem(key);
+
+    const r = ref<T>(item ? JSON.parse(item) : defaultValue);
+
+    watch(
+        r,
+        (value) => {
+            localStorage.setItem(key, JSON.stringify(value));
+        },
+        { deep: true },
+    );
+
+    return r;
 }

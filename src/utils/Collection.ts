@@ -49,6 +49,15 @@ export class Collection<T> extends Array<T> {
             return values;
         }
     }
+
+    public chunk(size: number): Collection<Collection<T>> {
+        const chunks = collect<Collection<T>>();
+
+        for (let i = 0; i < this.length; i += size) {
+            chunks.push(collect(this.slice(i, i + size)));
+        }
+        return chunks;
+    }
 }
 
 export function collect<T>(data: Iterable<T> = []): Collection<T> {

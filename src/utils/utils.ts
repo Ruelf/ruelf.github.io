@@ -40,6 +40,7 @@ export function sleep(timeout: number): Promise<void> {
         }, timeout);
     });
 }
+
 export function localStorageRef<T extends Json>(
     key: string,
 ): Ref<T | undefined>;
@@ -50,7 +51,7 @@ export function localStorageRef<T extends Json>(
 export function localStorageRef<T extends Json>(key: string, defaultValue?: T) {
     const item = localStorage.getItem(key);
 
-    const r = ref<T>(item ? JSON.parse(item) : defaultValue);
+    const r = ref(item ? JSON.parse(item) : defaultValue);
 
     watch(
         r,

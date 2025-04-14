@@ -14,7 +14,7 @@ import JokeInfo from '@/views/JokeInfo.vue';
 import TestView from '@/views/TestView.vue';
 import MorseView from '@/views/MorseView.vue';
 import TsView from '@/views/TsView.vue';
-import CubeTimer from '@/views/cube/CubeTimer.vue';
+import StopwatchTimer from '@/views/StopwatchTimer.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -63,6 +63,11 @@ const router = createRouter({
             path: '/ts',
             name: 'ts',
             component: TsView,
+        },
+        {
+            path: '/stopwatch',
+            name: 'stopwatch',
+            component: StopwatchTimer,
         },
         {
             path: '/f1',
@@ -125,16 +130,6 @@ const router = createRouter({
                             props: true,
                         },
                     ],
-                },
-            ],
-        },
-        {
-            path: '/cube',
-            children: [
-                {
-                    path: 'timer',
-                    name: 'cubeTimer',
-                    component: CubeTimer,
                 },
             ],
         },

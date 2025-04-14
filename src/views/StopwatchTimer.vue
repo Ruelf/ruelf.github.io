@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Card from '@/components/Card.vue';
 import FormatSeconds from '@/components/FormatSeconds.vue';
-import InputField from '@/components/InputField.vue';
 import SecondaryButton from '@/components/SecondaryButton.vue';
 import Table from '@/components/table/Table.vue';
 import Td from '@/components/table/Td.vue';
@@ -152,16 +151,18 @@ function eventListener<K extends keyof HTMLElementEventMap>(
 
         <div class="grid gap-4 sm:grid-cols-12">
             <Card class="col-span-6 p-4">
-                <div for="start_delay" class="mb-1">Start delay</div>
-                <div>
-                    <InputField
-                        v-model="startDelayTime"
-                        type="number"
-                        id="start_delay"
-                        class="max-w-24"
+                <button
+                    @mousedown="up"
+                    @mouseup="down"
+                    :class="[
+                        status === 'running' ? 'bg-red-500' : 'bg-green-500',
+                    ]"
+                    class="rounded-lg px-4 py-2 text-lg uppercase text-white shadow-lg hover:opacity-75 active:scale-95 active:opacity-50"
+                >
+                    <font-awesome-icon
+                        :icon="['fas', status === 'running' ? 'stop' : 'play']"
                     />
-                    ms
-                </div>
+                </button>
             </Card>
 
             <Card class="col-span-6">

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Card from '@/components/Card.vue';
+import FormatSeconds from '@/components/FormatSeconds.vue';
 import InputField from '@/components/InputField.vue';
 import SecondaryButton from '@/components/SecondaryButton.vue';
 import Table from '@/components/table/Table.vue';
@@ -7,7 +8,7 @@ import Td from '@/components/table/Td.vue';
 import Th from '@/components/table/Th.vue';
 import Tr from '@/components/table/Tr.vue';
 import { collect, localStorageRef } from '@/utils';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import dayjs from 'dayjs';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
 interface Record {
@@ -21,6 +22,15 @@ const status = localStorageRef('cube.status', 'idle');
 
 const startTime = localStorageRef<number>('cube.startTime');
 const endTime = ref<number>();
+
+const outputDuration = computed(() =>
+    Math.max(
+        0,
+        endTime.value && startTime.value
+            ? (endTime.value - startTime.value) / 1000
+            : 0,
+    ),
+);
 
 const records = localStorageRef<Record[]>('cube.records', []);
 
@@ -120,115 +130,108 @@ function eventListener<K extends keyof HTMLElementEventMap>(
 </script>
 
 <template>
-    <div class="flex flex-col gap-1">
-        <label for="start_delay">Start delay</label>
+    <div class="grid gap-4">
         <div>
-            <InputField
-                v-model="startDelayTime"
-                type="number"
-                id="start_delay"
-                class="max-w-24"
-            />
-            ms
-        </div>
-    </div>
-
-    <div class="flex flex-col-reverse">
-        <Card class="bottom-0 right-0 m-0 bg-red-500 2xl:absolute 2xl:m-8">
-            <template #header>
-                <div class="flex justify-between">
-                    <div class="text-xl">Times</div>
-                    <SecondaryButton
-                        :disabled="records.length === 0"
-                        @click="records = []"
-                    >
-                        Reset
-                    </SecondaryButton>
-                </div>
-            </template>
-
-            <Table>
-                <template #head>
-                    <Tr>
-                        <Th>Start</Th>
-                        <Th>End</Th>
-                        <Th>Time</Th>
-                    </Tr>
-                </template>
-
-                <template #body>
-                    <Tr
-                        v-for="record of pages[currentPage]"
-                        :key="record.startTime"
-                    >
-                        <Td class="text-right">
-                            {{ record.startTime }}
-                        </Td>
-                        <Td class="text-right">
-                            {{ record.endTime }}
-                        </Td>
-                        <Td class="text-right">
-                            {{
-                                (
-                                    (record.endTime - record.startTime) /
-                                    1000
-                                ).toFixed(3)
-                            }}
-                        </Td>
-                    </Tr>
-                </template>
-            </Table>
-
-            <div class="flex justify-between p-4">
-                <SecondaryButton
-                    :disabled="currentPage <= 0"
-                    @click="currentPage--"
-                >
-                    <FontAwesomeIcon :icon="['fas', 'chevron-left']" />
-                </SecondaryButton>
-
-                <div class="flex flex-col items-center text-sm">
-                    <div>
-                        Page
-                        <b>{{ currentPage + 1 }}</b>
-                        of
-                        <b>{{ pages.length }}</b>
-                    </div>
-                    <div>
-                        Total: <b>{{ records.length }}</b>
-                    </div>
-                </div>
-
-                <SecondaryButton
-                    :disabled="currentPage + 1 >= pages.length"
-                    @click="currentPage++"
-                >
-                    <FontAwesomeIcon :icon="['fas', 'chevron-right']" />
-                </SecondaryButton>
-            </div>
-        </Card>
-
-        <div
-            @mousedown="down"
-            @mouseup="up"
-            @touchstart.prevent="down"
-            @touchend="up"
-            class="flex flex-col items-center justify-center p-52"
-        >
-            <span
+            <Card
+                @mousedown.left="down"
+                @mouseup.left="up"
+                @touchstart.prevent="down"
+                @touchend="up"
                 :class="{
                     'text-red-500': status === 'waiting_for_start_delay',
                     'text-green-500': status === 'ready',
                 }"
-                class="select-none text-9xl"
+                class="flex justify-center p-4"
             >
-                {{
-                    Math.max(
-                        0,
-                        endTime && startTime ? (endTime - startTime) / 1000 : 0,
-                    ).toFixed(3)
-                }}
-            </span>
+                <FormatSeconds
+                    :seconds="outputDuration"
+                    class="select-none font-mono text-8xl 2xl:text-9xl"
+                />
+            </Card>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-12">
+            <Card class="col-span-6 p-4">
+                <div for="start_delay" class="mb-1">Start delay</div>
+                <div>
+                    <InputField
+                        v-model="startDelayTime"
+                        type="number"
+                        id="start_delay"
+                        class="max-w-24"
+                    />
+                    ms
+                </div>
+            </Card>
+
+            <Card class="col-span-6">
+                <template #header>
+                    <div class="flex justify-between">
+                        <div class="text-xl">Times</div>
+                        <SecondaryButton
+                            :disabled="records.length === 0"
+                            @click="records = []"
+                        >
+                            Reset
+                        </SecondaryButton>
+                    </div>
+                </template>
+
+                <Table>
+                    <template #head>
+                        <Tr>
+                            <Th>Start</Th>
+                            <Th>End</Th>
+                            <Th>Time</Th>
+                        </Tr>
+                    </template>
+
+                    <template #body>
+                        <Tr
+                            v-for="record of pages[currentPage]"
+                            :key="record.startTime"
+                        >
+                            <Td>
+                                {{ dayjs(record.startTime).format('lll') }}
+                            </Td>
+                            <Td>
+                                {{ dayjs(record.endTime).format('lll') }}
+                            </Td>
+                            <Td>
+                                {{ (record.endTime - record.startTime) / 1000 }}
+                            </Td>
+                        </Tr>
+                    </template>
+                </Table>
+
+                <div class="flex justify-between p-4">
+                    <SecondaryButton
+                        :disabled="currentPage <= 0"
+                        @click="currentPage--"
+                    >
+                        <font-awesome-icon :icon="['fas', 'chevron-left']" />
+                    </SecondaryButton>
+
+                    <div class="flex flex-col items-center text-sm">
+                        <div>
+                            Page
+                            <b>{{ currentPage + 1 }}</b>
+                            of
+                            <b>{{ pages.length }}</b>
+                        </div>
+                        <div>
+                            Total: <b>{{ records.length }}</b>
+                        </div>
+                    </div>
+
+                    <SecondaryButton
+                        :disabled="currentPage + 1 >= pages.length"
+                        @click="currentPage++"
+                    >
+                        <font-awesome-icon :icon="['fas', 'chevron-right']" />
+                    </SecondaryButton>
+                </div>
+            </Card>
         </div>
     </div>
 </template>

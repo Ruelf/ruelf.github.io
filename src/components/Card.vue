@@ -1,6 +1,20 @@
+<script setup lang="ts">
+withDefaults(
+    defineProps<{
+        forceRounded?: boolean;
+    }>(),
+    {
+        forceRounded: false,
+    },
+);
+</script>
+
 <template>
     <div
-        class="card dark:white bg-black bg-opacity-5 shadow-xl sm:rounded-lg dark:bg-white dark:bg-opacity-5 dark:shadow-2xl [&_.card]:rounded-lg"
+        :class="[
+            forceRounded ? 'rounded-lg' : 'sm:rounded-lg [&_.card]:rounded-lg',
+        ]"
+        class="card dark:white bg-black bg-opacity-5 shadow-xl dark:bg-white dark:bg-opacity-5 dark:shadow-2xl"
     >
         <div
             v-if="$slots.header"

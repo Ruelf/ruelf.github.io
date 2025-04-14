@@ -10,11 +10,16 @@ import router from './router';
 import 'highlight.js/styles/github-dark-dimmed.min.css';
 import 'highlight.js/lib/common';
 import hljsVuePlugin from '@highlightjs/vue-plugin';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import dayjs from 'dayjs';
+
+dayjs.extend(localizedFormat);
 
 library.add(fas, far, fab);
 
-const app = createApp(App);
-
+const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon);
 app.use(router);
 app.use(hljsVuePlugin);
 

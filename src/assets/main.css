@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --3d-button-shadow-width: 2px;
+  --3d-button-shadow-blur: 1px;
+  --3d-button-shadow-opacity: 0.25;
+}
+
+.button-3d {
+  @apply ![box-shadow:var(--3d-button-shadow-width)_var(--3d-button-shadow-width)_var(--3d-button-shadow-blur)_rgba(255,_255,_255,_var(--3d-button-shadow-opacity))_inset,_calc(-1_*_var(--3d-button-shadow-width))_calc(-1_*_var(--3d-button-shadow-width))_var(--3d-button-shadow-blur)_rgba(0,_0,_0,_var(--3d-button-shadow-opacity))_inset] active:![box-shadow:var(--3d-button-shadow-width)_var(--3d-button-shadow-width)_var(--3d-button-shadow-blur)_rgba(0,_0,_0,_var(--3d-button-shadow-opacity))_inset,_calc(-1_*_var(--3d-button-shadow-width))_calc(-1_*_var(--3d-button-shadow-width))_var(--3d-button-shadow-blur)_rgba(255,_255,_255,_var(--3d-button-shadow-opacity))_inset];
+}

@@ -15,8 +15,6 @@ interface Record {
     endTime: number;
 }
 
-const startDelayTime = localStorageRef('cube.startDelay', 500);
-
 const status = localStorageRef('cube.status', 'idle');
 
 const startTime = localStorageRef<number>('cube.startTime');
@@ -38,7 +36,6 @@ const currentPage = ref(0);
 
 const pages = computed(() => collect(records.value).chunk(perPage));
 
-let startDelayTimeoutId: number;
 let timerIntervalId: number;
 
 onMounted(() => {
@@ -51,67 +48,36 @@ onMounted(() => {
     }
 });
 
-function down() {
-    switch (status.value) {
-        case 'idle':
-            status.value = 'waiting_for_start_delay';
-
-            startDelayTimeoutId = setTimeout(() => {
-                status.value = 'ready';
-            }, startDelayTime.value);
-            break;
-
-        case 'running':
-            const now = Date.now();
-            clearInterval(timerIntervalId);
-            endTime.value = now;
-            status.value = 'finished';
-
-            if (startTime.value) {
-                records.value.unshift({
-                    startTime: startTime.value,
-                    endTime: endTime.value,
-                });
-            }
-
-            break;
+function start() {
+    if (status.value !== 'idle') {
+        return;
     }
+
+    status.value = 'running';
+    startTime.value = Date.now();
+
+    timerIntervalId = setInterval(() => {
+        endTime.value = Date.now();
+    });
 }
 
-function up() {
-    switch (status.value) {
-        case 'waiting_for_start_delay':
-            if (startDelayTimeoutId) {
-                clearTimeout(startDelayTimeoutId);
-            }
+function stop() {
+    status.value = 'idle';
 
-            status.value = 'idle';
-            break;
+    clearInterval(timerIntervalId);
+}
 
-        case 'ready':
-            status.value = 'running';
-            startTime.value = Date.now();
-
-            timerIntervalId = setInterval(() => {
-                endTime.value = Date.now();
-            });
-            break;
-
-        case 'finished':
-            status.value = 'idle';
-            break;
+function toggle() {
+    if (status.value === 'idle') {
+        start();
+    } else {
+        stop();
     }
 }
 
 eventListener('keydown', ({ code }) => {
     if (code === 'Space') {
-        down();
-    }
-});
-
-eventListener('keyup', ({ code }) => {
-    if (code === 'Space') {
-        up();
+        toggle();
     }
 });
 
@@ -132,10 +98,7 @@ function eventListener<K extends keyof HTMLElementEventMap>(
     <div class="grid gap-4">
         <div>
             <Card
-                @mousedown.left="down"
-                @mouseup.left="up"
-                @touchstart.prevent="down"
-                @touchend="up"
+                @click="toggle"
                 :class="{
                     'text-red-500': status === 'waiting_for_start_delay',
                     'text-green-500': status === 'ready',
@@ -152,16 +115,23 @@ function eventListener<K extends keyof HTMLElementEventMap>(
         <div class="grid gap-4 sm:grid-cols-12">
             <Card class="col-span-6 p-4">
                 <button
-                    @mousedown="up"
-                    @mouseup="down"
+                    @click="toggle"
                     :class="[
-                        status === 'running' ? 'bg-red-500' : 'bg-green-500',
+                        'rounded-lg px-4 py-2 text-lg uppercase text-white hover:opacity-75 active:opacity-50',
+                        status === 'running'
+                            ? ['bg-red-500']
+                            : ['bg-green-500'],
+                        'button-3d',
                     ]"
-                    class="rounded-lg px-4 py-2 text-lg uppercase text-white shadow-lg hover:opacity-75 active:scale-95 active:opacity-50"
                 >
-                    <font-awesome-icon
-                        :icon="['fas', status === 'running' ? 'stop' : 'play']"
-                    />
+                    <div>
+                        <font-awesome-icon
+                            :icon="[
+                                'fas',
+                                status === 'running' ? 'stop' : 'play',
+                            ]"
+                        />
+                    </div>
                 </button>
             </Card>
 

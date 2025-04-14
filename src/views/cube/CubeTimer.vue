@@ -33,17 +33,12 @@ let startDelayTimeoutId: number;
 let timerIntervalId: number;
 
 onMounted(() => {
-    switch (status.value) {
-        case 'waiting_for_start_delay':
-        case 'ready':
-            status.value = 'idle';
-            break;
-
-        case 'running':
-            timerIntervalId = setInterval(() => {
-                endTime.value = Date.now();
-            });
-            break;
+    if (status.value === 'running') {
+        timerIntervalId = setInterval(() => {
+            endTime.value = Date.now();
+        });
+    } else {
+        status.value = 'idle';
     }
 });
 
